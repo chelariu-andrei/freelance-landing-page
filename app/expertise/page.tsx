@@ -12,7 +12,7 @@ export default function ExpertisePage() {
       <main>
         <PageHero current="/expertise" lines={h.lines} subtitle={h.subtitle} primaryCta={h.primaryCta} />
       </main>
-      <Footer />
+      <Footer year={new Date().getFullYear()} />
     </>
   );
 }

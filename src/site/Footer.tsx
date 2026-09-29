@@ -4,7 +4,11 @@ import { SiteFooter } from "@/layout/SiteFooter";
 import { content } from "@/content/content";
 import { isSet, mailtoHref, resolveHref } from "@/content/links";
 
-export function Footer() {
+export interface FooterProps {
+  year: number;
+}
+
+export function Footer({ year }: FooterProps) {
   const { site, nav, footer } = content;
   const connect = [
     ...(isSet(site.linkedin) ? [{ label: footer.linkedinLabel, href: site.linkedin }] : []),
@@ -22,7 +26,7 @@ export function Footer() {
       ctas={[{ label: nav.cta, href: resolveHref(site.calLink) }]}
       columns={[{ title: footer.pagesTitle, links: nav.links }, { title: footer.connectTitle, links: connect }]}
       socials={socials}
-      copyright={`© ${new Date().getFullYear()} ${site.name} · ${footer.privacy}`}
+      copyright={`© ${year} ${site.name} · ${footer.privacy}`}
     />
   );
 }

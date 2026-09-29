@@ -16,7 +16,7 @@ export default function LandingPage() {
         <Stats />
         <Contact />
       </main>
-      <Footer />
+      <Footer year={new Date().getFullYear()} />
     </>
   );
 }

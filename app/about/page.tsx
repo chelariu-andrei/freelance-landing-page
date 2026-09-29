@@ -18,7 +18,7 @@ export default function AboutPage() {
         <StackCarousel />
         <Closing />
       </main>
-      <Footer />
+      <Footer year={new Date().getFullYear()} />
     </>
   );
 }
