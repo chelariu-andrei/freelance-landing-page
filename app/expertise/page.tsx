@@ -1,6 +1,9 @@
 import { PageHero } from "@/site/PageHero";
 import { Footer } from "@/site/Footer";
 import { content } from "@/content/content";
+import { pageMetadata } from "@/site/seo";
+
+export const metadata = pageMetadata("expertise", "/expertise");
 
 export default function ExpertisePage() {
   const h = content.expertise.hero;

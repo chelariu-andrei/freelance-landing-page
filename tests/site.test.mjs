@@ -109,3 +109,40 @@ test("stack carousel lists tech, no client logos", () => {
   const html = page("about");
   for (const n of ["Spring Boot", "Quarkus", "PostgreSQL", "LangChain4j", "n8n"]) assert.match(html, new RegExp(n), n);
 });
+
+test("per-page title, description, canonical and OG", () => {
+  const cases = [["index", "/", "AI for existing Java systems"], ["about", "/about", "About · Andrei Chelariu"], ["expertise", "/expertise", "Expertise · Andrei Chelariu"]];
+  for (const [p, path, title] of cases) {
+    const html = page(p);
+    assert.match(html, new RegExp(`<title>[^<]*${title}`), p);
+    assert.match(html, /<meta name="description" content="[^"]+"/, p);
+    assert.match(html, new RegExp(`<link rel="canonical" href="https?://[^"]+${path === "/" ? "/?" : path}"`), p);
+    assert.match(html, /<meta property="og:title"/, p);
+    assert.match(html, /<meta name="twitter:card" content="summary"/, p);
+  }
+});
+
+test("expertise is noindex, the others are indexable", () => {
+  assert.match(page("expertise"), /<meta name="robots" content="noindex/);
+  assert.doesNotMatch(page("index"), /noindex/);
+  assert.doesNotMatch(page("about"), /noindex/);
+});
+
+test("JSON-LD Person + ProfessionalService", () => {
+  const m = page("index").match(/<script type="application\/ld\+json">([^<]+)<\/script>/);
+  assert.ok(m, "json-ld present");
+  const types = JSON.parse(m[1])["@graph"].map((n) => n["@type"]);
+  assert.deepEqual(types, ["Person", "ProfessionalService"]);
+});
+
+test("no page ships an unfilled placeholder in an href", () => {
+  for (const p of PAGES) assert.doesNotMatch(page(p), /href="[^"]*\{\{/, p);
+});
+
+test("sitemap lists / and /about only; robots points to it", () => {
+  const sitemap = readFileSync(new URL("../out/sitemap.xml", import.meta.url), "utf8");
+  assert.equal(count(sitemap, /<loc>/g), 2);
+  assert.doesNotMatch(sitemap, /expertise/);
+  const robots = readFileSync(new URL("../out/robots.txt", import.meta.url), "utf8");
+  assert.match(robots, /Sitemap: https?:\/\/.+\/sitemap\.xml/);
+});
