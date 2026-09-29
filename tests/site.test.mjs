@@ -58,3 +58,23 @@ test("landing hero: headline, trust line, CTAs and pipeline in order", () => {
     at = i;
   }
 });
+
+test("landing sections in order: services, stats, contact", () => {
+  const html = page("index");
+  const iServices = html.indexOf('id="services"');
+  const iStats = html.indexOf("rewrites required.");
+  const iContact = html.indexOf('id="contact"');
+  assert.ok(iServices > 0 && iStats > iServices && iContact > iStats, "order");
+  for (const s of ["AI Automation Audit", "Automation Implementation", "Custom AI Platform / Internal Tools", "Legacy Modernization Acceleration"]) {
+    assert.match(html, new RegExp(s.replace(/[/]/g, "\\/")), s);
+  }
+  // ArrowCta renders its label 3 times per instance: 2 invisible grid positioning spans + 1 animated visible span.
+  assert.equal(count(html, />Discuss this</g), 12);
+  assert.match(html, /small, fixed-scope first step\./);
+  assert.match(html, /needs to reach production\?/);
+  assert.match(html, />Book a discovery call</);
+});
+
+test("prices hidden while pricingMode is hidden", () => {
+  assert.doesNotMatch(page("index"), /PRICE_/);
+});

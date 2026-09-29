@@ -76,6 +76,8 @@ export const content = {
       pipelineAriaLabel: "How AI plugs into your existing system",
     },
     servicesCta: "Discuss this",
+    servicesAriaLabel: "Services",
+    serviceLabels: { forWho: "For:", youGet: "You get:", outcome: "Outcome:" },
     servicesMediaTitle: "You get",
     services: [
       {
