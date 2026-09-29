@@ -38,7 +38,7 @@ function offset(variant: RevealVariant, d: number) {
 }
 
 export function revealVariants(variant: RevealVariant = "up", d: number = DIST.md, reduce = false): Variants {
-  if (reduce) return { hidden: { opacity: 0 }, show: { opacity: 1 } };
+  if (reduce) return { hidden: { opacity: 0 }, show: { opacity: 1, x: 0, y: 0, scale: 1 } };
   return {
     hidden: { opacity: 0, ...offset(variant, d) },
     show: { opacity: 1, x: 0, y: 0, scale: 1 },
