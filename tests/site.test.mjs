@@ -13,6 +13,12 @@ test("every page is exported with lang=en and the Ac. root", () => {
   }
 });
 
+test("noscript fallback makes ac-root content visible without JS", () => {
+  const html = page("index");
+  assert.match(html, /<noscript>/);
+  assert.match(html, /opacity:1!important/);
+});
+
 const count = (html, re) => (html.match(re) || []).length;
 
 test("every page has exactly one h1, the main nav, and the footer", () => {
