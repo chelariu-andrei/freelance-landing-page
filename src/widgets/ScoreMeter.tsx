@@ -34,7 +34,7 @@ export function ScoreMeter({ label, value, verdict, dots = 30, animated = true, 
         <motion.div
           className="flex flex-nowrap gap-1 flex-1 min-w-[10rem]"
           role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={value} aria-label={label}
-          initial={animate ? "off" : "on"} whileInView="on" viewport={{ once: true, amount: 0.5 }}
+          initial={animate ? "off" : "on"} whileInView="on" viewport={{ once: false, amount: 0.5 }}
           variants={{ off: {}, on: { transition: { staggerChildren: 0.02 } } }}
         >
           {Array.from({ length: dots }).map((_, i) => (

@@ -12,6 +12,8 @@ export interface PageHeroProps {
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   aside?: React.ReactNode;
+  media?: React.ReactNode;
+  action?: React.ReactNode;
 }
 
 export function PageHero({ current, ...hero }: PageHeroProps) {

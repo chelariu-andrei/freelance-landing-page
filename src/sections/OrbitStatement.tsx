@@ -33,12 +33,14 @@ export interface OrbitStatementProps {
   magnet?: number;
   /** Very slow idle bob of the bubbles. Default false. */
   float?: boolean;
+  /** Play the scroll entrance only the first time. Default false: everything hides again when scrolled out and replays on re-entry. */
+  once?: boolean;
   className?: string;
 }
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
-function Bubble({ item, magnet, float, index, tone }: { item: OrbitItem; magnet: number; float: boolean; index: number; tone: "ink" | "cream" }) {
+function Bubble({ item, magnet, float, index, tone, once, origin }: { item: OrbitItem; magnet: number; float: boolean; index: number; tone: "ink" | "cream"; once: boolean; origin: { x: number; y: number } }) {
   const reduce = !!useReducedMotion();
   const ref = React.useRef<HTMLElement>(null);
   const mx = useMotionValue(0), my = useMotionValue(0);
@@ -64,6 +66,13 @@ function Bubble({ item, magnet, float, index, tone }: { item: OrbitItem; magnet:
       animate={float && !reduce ? { y: [0, -6, 0] } : undefined}
       transition={float && !reduce ? { duration: 7 + index * 1.5, repeat: Infinity, ease: "easeInOut" } : undefined}
     >
+      <motion.div
+        className="w-full h-full"
+        initial={reduce ? false : { opacity: 0, scale: 0.55, x: (origin.x - item.x) * 3, y: (origin.y - item.y) * 3 }}
+        whileInView={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+        viewport={{ once, amount: 0.3 }}
+        transition={{ duration: D.slow, delay: 0.15 + index * 0.08, ease: E.out }}
+      >
       <Comp
         ref={ref}
         {...(item.href ? { href: item.href, "aria-label": item.label } : { role: "img", "aria-label": item.label })}
@@ -79,12 +88,13 @@ function Bubble({ item, magnet, float, index, tone }: { item: OrbitItem; magnet:
         )}
       >
         <span
-          className="flex items-center justify-center w-[34%] h-[34%] [&>svg]:w-full [&>svg]:h-full transition-transform duration-base ease-out group-hover:-rotate-6"
+          className="flex items-center justify-center w-[34%] h-[34%] [&>svg]:w-full [&>svg]:h-full [&>img]:w-full [&>img]:h-full transition-transform duration-base ease-out group-hover:-rotate-6"
           aria-hidden
         >
           {item.icon}
         </span>
       </Comp>
+      </motion.div>
     </motion.div>
   );
 }
@@ -95,7 +105,7 @@ function Bubble({ item, magnet, float, index, tone }: { item: OrbitItem; magnet:
  * the cursor, icon tilts). The centre disc and the heading never change.
  */
 export function OrbitStatement({
-  items, statement, center, centerPosition = { x: 48, y: 50, size: 47 }, tone = "ink", magnet = 0.15, float = false, className,
+  items, statement, center, centerPosition = { x: 48, y: 50, size: 47 }, tone = "ink", magnet = 0.15, float = false, once = false, className,
 }: OrbitStatementProps) {
   const reduce = !!useReducedMotion();
   const ink = tone === "ink";
@@ -109,17 +119,23 @@ export function OrbitStatement({
             style={{ left: `calc(${c.x}% - ${c.size / 2}%)`, top: `calc(${c.y}% - ${c.size}%)`, width: `${c.size}%`, aspectRatio: "1", zIndex: 1 }}
             initial={reduce ? false : { scale: 0.85, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once, amount: 0.3 }}
             transition={{ duration: D.slow, ease: E.out }}
             aria-hidden
           >
             {center ?? <span className="font-display font-medium tracking-[-0.03em] leading-none text-[clamp(2.5rem,9vw,8rem)]">Ac.</span>}
           </motion.div>
-          {items.map((it, i) => <Bubble key={it.id} item={it} index={i} tone={tone} magnet={magnet} float={float} />)}
+          {items.map((it, i) => <Bubble key={it.id} item={it} index={i} tone={tone} magnet={magnet} float={float} once={once} origin={c} />)}
         </div>
-        <h2 className={cx("m-0 mx-auto max-w-[22ch] lg:max-w-[24ch] mt-6 lg:mt-10 text-center font-display font-regular text-heading-xl", ink ? "text-white" : "text-ink")}>
+        <motion.h2
+          initial={reduce ? false : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once, amount: 0.5 }}
+          transition={{ duration: D.slow, delay: 0.3, ease: E.out }}
+          className={cx("m-0 mx-auto max-w-[22ch] lg:max-w-[24ch] mt-6 lg:mt-10 text-center font-display font-regular text-heading-xl", ink ? "text-white" : "text-ink")}
+        >
           {statement}
-        </h2>
+        </motion.h2>
       </div>
     </section>
   );

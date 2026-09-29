@@ -15,23 +15,25 @@ export interface ArrowCtaProps {
   /** Pill colour at rest. Default "white". */
   tone?: "white" | "yellow";
   /** Colour that sweeps in left → right on hover. Default "yellow" (or "white" when tone is yellow). */
-  hoverTone?: "yellow" | "white" | "none";
+  hoverTone?: "yellow" | "white" | "ink" | "none";
   /**
    * swap = colour sweep + disc travels to the other end + label slides (reference) ·
    * nudge = only the arrow nudges (the previous behaviour). Default "swap".
    */
   hoverEffect?: "swap" | "nudge";
+  /** Open `href` in a new tab. */
+  newTab?: boolean;
   className?: string;
 }
 
-const fillClass = { yellow: "bg-yellow", white: "bg-white" };
+const fillClass = { yellow: "bg-yellow", white: "bg-white", ink: "bg-ink" };
 
 /**
  * Oversized pill CTA with an ink arrow disc. On hover/focus the pill fills with the hover colour
  * from left to right, the disc glides to the opposite end and the label slides to `hoverLabel`.
  */
 export function ArrowCta({
-  label, hoverLabel, href, onClick, size = "xl", tone = "white", hoverTone, hoverEffect = "swap", className,
+  label, hoverLabel, href, onClick, size = "xl", tone = "white", hoverTone, hoverEffect = "swap", newTab, className,
 }: ArrowCtaProps) {
   const reduce = !!useReducedMotion();
   const [on, setOn] = React.useState(false);
@@ -42,12 +44,15 @@ export function ArrowCta({
   const Comp: any = href ? motion.a : motion.button;
   const t = reduce ? { duration: 0 } : { duration: D.slow, ease: E.out };
   const active = swap && on;
+  // Ink sweep: the pill and disc trade colours (yellow/ink ⇄ ink/yellow).
+  const inked = fill === "ink";
+  const flipped = inked && active;
 
   const disc = (
     <motion.span
       layout={swap && !reduce ? "position" : false}
       transition={t}
-      className={cx("relative z-10 inline-flex items-center justify-center rounded-full bg-ink text-white shrink-0 overflow-hidden", xl ? "w-16 h-16 lg:w-32 lg:h-32" : "w-12 h-12")}
+      className={cx("relative z-10 inline-flex items-center justify-center rounded-full shrink-0 overflow-hidden transition-colors duration-slow", flipped ? "bg-yellow text-ink" : "bg-ink text-white", xl ? "w-16 h-16 lg:w-32 lg:h-32" : "w-12 h-12")}
     >
       <motion.span
         className="inline-flex"
@@ -64,7 +69,7 @@ export function ArrowCta({
     <motion.span
       layout={swap && !reduce ? "position" : false}
       transition={t}
-      className={cx("relative z-10 grid tracking-[-0.03em] whitespace-nowrap overflow-hidden", xl ? "px-4 lg:px-10" : "px-4")}
+      className={cx("relative z-10 grid tracking-[-0.03em] whitespace-nowrap overflow-hidden transition-colors duration-slow", flipped && "text-white", xl ? "px-4 lg:px-10" : "px-4")}
     >
       <span className="invisible [grid-area:1/1]" aria-hidden>{label}</span>
       <span className="invisible [grid-area:1/1]" aria-hidden>{alt}</span>
@@ -88,6 +93,7 @@ export function ArrowCta({
     <Comp
       href={href}
       onClick={onClick}
+      {...(href && newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       type={href ? undefined : "button"}
       aria-label={label}
       onHoverStart={() => setOn(true)}
@@ -96,7 +102,8 @@ export function ArrowCta({
       onBlur={() => setOn(false)}
       whileTap={reduce ? undefined : { scale: 0.98 }}
       className={cx(
-        "ac-focus ac-on-dark relative isolate inline-flex items-center rounded-pill border-0 no-underline cursor-pointer font-display text-ink overflow-hidden",
+        "ac-focus ac-on-dark relative isolate inline-flex items-center rounded-pill no-underline cursor-pointer font-display text-ink overflow-hidden",
+        inked ? "border border-solid border-yellow" : "border-0",
         tone === "white" ? "bg-white" : "bg-yellow",
         xl ? "p-2 lg:p-4 text-heading-lg lg:text-display-lg" : "p-2 text-lead",
         className,

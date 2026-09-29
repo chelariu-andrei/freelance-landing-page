@@ -16,7 +16,7 @@ export interface RevealProps {
   ease?: [number, number, number, number];
   /** Travel distance in px for slide variants. Default distance.md (24). */
   distance?: number;
-  /** Play only the first time it enters the viewport. Default true. */
+  /** Play only the first time it enters the viewport. Default false: it hides again when scrolled out of view and replays on re-entry. */
   once?: boolean;
   /** Fraction of the element visible before it plays (0–1). Default 0.2. */
   amount?: number;
@@ -48,7 +48,7 @@ export function revealVariants(variant: RevealVariant = "up", d: number = DIST.m
 /** Scroll-reveal wrapper. Fades/slides its child in when it enters the viewport; opacity-only under prefers-reduced-motion. */
 export function Reveal({
   children, variant = "up", duration = D.slow, delay = 0, ease = E.out, distance = DIST.md,
-  once = true, amount = 0.2, immediate = false, as = "div", className,
+  once = false, amount = 0.2, immediate = false, as = "div", className,
 }: RevealProps) {
   const reduce = !!useReducedMotion();
   const Comp = (motion as any)[as];
@@ -73,7 +73,7 @@ export interface StaggerProps extends Omit<RevealProps, "variant" | "distance"> 
 
 /** Parent that staggers its <StaggerItem> children in sequence. */
 export function Stagger({
-  children, stagger = S.base, delay = 0, once = true, amount = 0.2, immediate = false, as = "div", className,
+  children, stagger = S.base, delay = 0, once = false, amount = 0.2, immediate = false, as = "div", className,
 }: StaggerProps) {
   const Comp = (motion as any)[as];
   const trigger = immediate ? { animate: "show" } : { whileInView: "show", viewport: { once, amount } };

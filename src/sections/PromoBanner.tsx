@@ -32,7 +32,7 @@ export function PromoBanner({ highlight, children, icon, href, tone = "ink", onD
       aria-label="Announcement"
       initial={animated ? { opacity: 0, y: reduce ? 0 : 16 } : false}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false, amount: 0.3 }}
       transition={{ duration: D.slow, ease: E.out }}
       className={cx("relative", ink ? "bg-ink text-white ac-dark" : "bg-yellow text-ink", className)}
     >

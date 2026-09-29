@@ -1,5 +1,6 @@
 export type IconKey =
   | "java" | "spring" | "quarkus" | "postgres" | "mongodb" | "react" | "gcp" | "terraform" | "kubernetes"
+  | "oracle" | "docker" | "nextjs"
   | "springai" | "langchain4j" | "mcp" | "n8n" | "make"
   | "audit" | "implement" | "platform" | "legacy" | "agents" | "code" | "process";
 
@@ -17,6 +18,11 @@ export interface MatrixModuleContent {
 export interface StackItem { id: string; name: string; icon: IconKey; description: string }
 export interface Seo { title: string; description: string }
 
+const YEARS = "5+";
+const INDUSTRIES = "Retail";
+
+const social = { linkedin: "https://www.linkedin.com/in/andrei-chelariu-8a7a86204/", github: "https://github.com/chelariu-andrei" };
+
 export const content = {
   site: {
     name: "Andrei Chelariu",
@@ -24,12 +30,14 @@ export const content = {
     /** {{SITE_URL}}: replace, or set NEXT_PUBLIC_SITE_URL. Must be a valid absolute URL. */
     url: "https://example.com",
     calLink: "{{CAL_LINK}}",
-    email: "{{EMAIL}}",
-    linkedin: "{{LINKEDIN}}",
-    github: "{{GITHUB}}",
-    photo: "{{PHOTO}}",
-    years: "{{YEARS}}",
-    industries: "{{INDUSTRIES}}",
+    email: "chelariu.andrew@gmail.com",
+    linkedin: social.linkedin,
+    github: social.github,
+    /** Europass CV, served from /public. */
+    europass: "/EUROPASS_CV.pdf",
+    photo: "/me.png",
+    years: YEARS,
+    industries: INDUSTRIES,
     areaServed: "Worldwide",
     /** "hidden" | "from": "from" shows each service's price line. */
     pricingMode: "hidden" as "hidden" | "from",
@@ -49,6 +57,7 @@ export const content = {
     linkedinLabel: "LinkedIn",
     githubLabel: "GitHub",
     emailLabel: "Email",
+    europassLabel: "Europass CV",
     privacy: "This site uses no cookies and no tracking.",
   },
   seo: {
@@ -69,8 +78,9 @@ export const content = {
     hero: {
       lines: [{ text: "Add AI to your" }, { text: "existing Java systems." }, { highlight: "Without a rewrite." }],
       subtitle: "I'm Andrei, a senior backend engineer. I add AI agents and automation to the Java/Spring systems you already run, without breaking production.",
-      trust: "{{YEARS}}+ years · Java / Spring / Quarkus · {{INDUSTRIES}}",
+      trust: `${YEARS} years · Java / Spring / Quarkus · ${INDUSTRIES}`,
       primaryCta: "Book a 30-min call",
+      primaryCtaHover: "Pick a time",
       secondaryCta: { label: "See how I work", href: "#services" },
       pipelineLabel: "How it plugs in",
       pipeline: ["Existing backend", "APIs", "Data", "AI agent", "Tools", "Production"],
@@ -117,7 +127,7 @@ export const content = {
     stats: [
       { value: "0", text: "rewrites required." },
       { value: "1", text: "small, fixed-scope first step." },
-      { value: "{{YEARS}}+", text: "years shipping production Java." },
+      { value: YEARS, text: "years shipping production Java." },
     ] as Stat[],
     contact: {
       title: "Have a legacy system, a manual workflow, or an AI idea that needs to reach production?",
@@ -130,10 +140,11 @@ export const content = {
     hero: {
       lines: [{ text: "Senior backend engineer." }, { text: "Making AI" }, { highlight: "survive production." }],
       subtitle: "Enterprise Java background, large-scale systems. Now focused on applying AI to existing systems, safely.",
-      primaryCta: "Book a call",
+      cvCta: "Europass CV",
+      cvCtaHover: "Open my CV",
     },
     orbit: {
-      statement: "{{YEARS}} years inside large Java systems. Now I add AI to them, safely.",
+      statement: `${YEARS} years inside large Java systems. Now I add AI to them, safely.`,
       monogram: "AC",
       photoAlt: "Andrei Chelariu",
       items: [
@@ -193,10 +204,13 @@ export const content = {
         { id: "spring", name: "Spring Boot", icon: "spring", description: "Services and APIs" },
         { id: "quarkus", name: "Quarkus", icon: "quarkus", description: "Fast, lean services" },
         { id: "postgres", name: "PostgreSQL", icon: "postgres", description: "Relational data" },
+        { id: "oracle", name: "Oracle", icon: "oracle", description: "Enterprise database" },
         { id: "mongodb", name: "MongoDB", icon: "mongodb", description: "Document data" },
         { id: "react", name: "React", icon: "react", description: "Internal UIs" },
+        { id: "nextjs", name: "Next.js", icon: "nextjs", description: "Web apps" },
         { id: "gcp", name: "GCP", icon: "gcp", description: "Cloud" },
         { id: "terraform", name: "Terraform", icon: "terraform", description: "Infrastructure as code" },
+        { id: "docker", name: "Docker", icon: "docker", description: "Containers" },
         { id: "kubernetes", name: "Kubernetes", icon: "kubernetes", description: "Deployment" },
         { id: "springai", name: "Spring AI", icon: "springai", description: "AI in Spring" },
         { id: "langchain4j", name: "LangChain4j", icon: "langchain4j", description: "Agents in Java" },
@@ -205,8 +219,9 @@ export const content = {
       ] as StackItem[],
     },
     closing: {
-      title: "AI is only valuable if it",
-      highlight: "survives production.",
+      title: "Looking for the",
+      highlight: "next challenge.",
+      subtitle: "If you have an interesting problem to solve, let’s talk.",
       primaryCta: "Book a call",
       secondaryCta: "LinkedIn",
     },

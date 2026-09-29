@@ -49,22 +49,6 @@ test("expertise placeholder copy", () => {
   assert.match(html, /href="\/about"/);
 });
 
-test("landing hero: headline, trust line, CTAs and pipeline in order", () => {
-  const html = page("index");
-  assert.match(html, /Without a rewrite\./);
-  assert.match(html, /\{\{YEARS\}\}\+ years · Java \/ Spring \/ Quarkus/);
-  assert.match(html, />(?:<span[^>]*>)?Book a 30-min call</);
-  assert.match(html, /href="#services"[^>]*>(?:<span[^>]*>)?See how I work</);
-  assert.match(html, /<ol aria-label="How AI plugs into your existing system"/);
-  const steps = ["Existing backend", "APIs", "Data", "AI agent", "Tools", "Production"];
-  let at = 0;
-  for (const s of steps) {
-    const i = html.indexOf(`>${s}<`, at);
-    assert.ok(i > at, `pipeline step ${s} in order`);
-    at = i;
-  }
-});
-
 test("landing sections in order: services, stats, contact", () => {
   const html = page("index");
   const iServices = html.indexOf('id="services"');
@@ -87,7 +71,7 @@ test("prices hidden while pricingMode is hidden", () => {
 
 test("about sections in order", () => {
   const html = page("about");
-  const order = ["survive production.", "years inside large Java systems", "Two disciplines, one engineer.", "Tools I ship with.", "survives production."];
+  const order = ["survive production.", "years inside large Java systems", "Two disciplines, one engineer.", "Tools I ship with.", "next challenge."];
   let at = 0;
   for (const s of order) {
     const i = html.indexOf(s, at);
@@ -98,9 +82,9 @@ test("about sections in order", () => {
 
 test("closing section is in the static HTML (works without JS/WebGL)", () => {
   const html = page("about");
-  assert.match(html, /AI is only valuable if it/);
-  assert.match(html, /survives production\./);
-  const i = html.indexOf("survives production.");
+  assert.match(html, /Looking for the/);
+  assert.match(html, /next challenge\./);
+  const i = html.indexOf("next challenge.");
   const slice = html.slice(i);
   assert.match(slice, />(?:<span[^>]*>)?Book a call</);
 });

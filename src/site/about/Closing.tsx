@@ -20,6 +20,7 @@ function StaticClosing() {
         <h2 className="m-0 font-display font-regular text-display-lg max-w-[16ch] text-white">
           {c.title} <HighlightText variant="text">{c.highlight}</HighlightText>
         </h2>
+        <p className="m-0 font-body text-body-lg max-w-prose text-muted-on-dark">{c.subtitle}</p>
         <div className="flex flex-wrap gap-3 justify-center">
           <Button href={primaryCta.href} size="lg" variant="primary">{primaryCta.label}</Button>
           {secondaryCta && <Button href={secondaryCta.href} size="lg" variant="outline">{secondaryCta.label}</Button>}
@@ -36,5 +37,5 @@ const DottedSurfaceSection = dynamic(() => import("@/sections/DottedSurfaceSecti
 
 export function Closing() {
   const { c, primaryCta, secondaryCta } = useClosingProps();
-  return <DottedSurfaceSection mode="dark" height="md" speed={0.5} dotSize={6} title={c.title} highlight={c.highlight} primaryCta={primaryCta} secondaryCta={secondaryCta} />;
+  return <DottedSurfaceSection mode="dark" height="md" speed={0.5} dotSize={6} title={c.title} highlight={c.highlight} subtitle={c.subtitle} primaryCta={primaryCta} secondaryCta={secondaryCta} />;
 }
