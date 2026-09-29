@@ -78,3 +78,34 @@ test("landing sections in order: services, stats, contact", () => {
 test("prices hidden while pricingMode is hidden", () => {
   assert.doesNotMatch(page("index"), /PRICE_/);
 });
+
+test("about sections in order", () => {
+  const html = page("about");
+  const order = ["survive production.", "years inside large Java systems", "Two disciplines, one engineer.", "Tools I ship with.", "survives production."];
+  let at = 0;
+  for (const s of order) {
+    const i = html.indexOf(s, at);
+    assert.ok(i >= at && i !== -1, `order: ${s}`);
+    at = i + 1;
+  }
+});
+
+test("closing section is in the static HTML (works without JS/WebGL)", () => {
+  const html = page("about");
+  assert.match(html, /AI is only valuable if it/);
+  assert.match(html, /survives production\./);
+  const i = html.indexOf("survives production.");
+  const slice = html.slice(i);
+  assert.match(slice, />(?:<span[^>]*>)?Book a call</);
+});
+
+test("unset photo falls back to the AC monogram, never a broken img", () => {
+  const html = page("about");
+  assert.match(html, />AC</);
+  assert.doesNotMatch(html, /src="\{\{PHOTO\}\}"/);
+});
+
+test("stack carousel lists tech, no client logos", () => {
+  const html = page("about");
+  for (const n of ["Spring Boot", "Quarkus", "PostgreSQL", "LangChain4j", "n8n"]) assert.match(html, new RegExp(n), n);
+});

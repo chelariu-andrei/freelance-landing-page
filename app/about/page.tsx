@@ -1,11 +1,20 @@
-import { PageHero } from "@/site/PageHero";
+import { AboutHero } from "@/site/about/AboutHero";
+import { Orbit } from "@/site/about/Orbit";
+import { Matrix } from "@/site/about/Matrix";
+import { StackCarousel } from "@/site/about/StackCarousel";
+import { Closing } from "@/site/about/Closing";
 import { Footer } from "@/site/Footer";
-import { content } from "@/content/content";
 
-export default function Page() {
+export default function AboutPage() {
   return (
     <>
-      <main><PageHero current="/about" lines={content.about.hero.lines} /></main>
+      <main>
+        <AboutHero />
+        <Orbit />
+        <Matrix />
+        <StackCarousel />
+        <Closing />
+      </main>
       <Footer />
     </>
   );
