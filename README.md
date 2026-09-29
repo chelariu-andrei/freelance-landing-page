@@ -31,3 +31,16 @@ tailwind.config.js · tsconfig.json · build.mjs (IIFE bundle → window.Ac)
 See SETUP.md for the shadcn / Tailwind / TypeScript setup.
 
 Props interfaces live next to each component. The design-system artifact carries the guidelines, live previews and generated API cards.
+
+## Freelancer site (Next.js)
+
+- `npm run dev`: local dev at http://localhost:3000
+- `npm run build:site`: static export to `out/` (deploy `out/` to Vercel, Netlify or Cloudflare Pages; on Vercel use the Next.js preset)
+- `npm test`: content unit tests + checks against the built HTML (run `build:site` first)
+
+**Edit copy:** everything lives in `src/content/content.ts`. Components never hard-code text.
+
+**Env:** `NEXT_PUBLIC_SITE_URL` (absolute URL, used for canonical, sitemap and JSON-LD; defaults to `content.site.url`).
+
+**Placeholders to fill** in `src/content/content.ts` (unset links fall back to `/#contact` or are hidden):
+`{{CAL_LINK}}` · `{{EMAIL}}` · `{{LINKEDIN}}` · `{{GITHUB}}` · `{{PHOTO}}` (image path under `public/`) · `{{YEARS}}` · `{{INDUSTRIES}}` · `{{SITE_URL}}` (`site.url`) · `{{PRICE_*}}` (shown only when `site.pricingMode = "from"`).
