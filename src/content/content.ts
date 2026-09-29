@@ -30,6 +30,7 @@ export const content = {
     photo: "{{PHOTO}}",
     years: "{{YEARS}}",
     industries: "{{INDUSTRIES}}",
+    areaServed: "Worldwide",
     /** "hidden" | "from": "from" shows each service's price line. */
     pricingMode: "hidden" as "hidden" | "from",
   },

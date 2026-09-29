@@ -17,12 +17,12 @@ export function pageMetadata(key: "landing" | "about" | "expertise", path: strin
 }
 
 export function jsonLd(): string {
-  const { name, role, linkedin, github } = content.site;
+  const { name, role, linkedin, github, areaServed } = content.site;
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
       { "@type": "Person", "@id": `${SITE_URL}/#person`, name, jobTitle: role, url: SITE_URL, sameAs: [linkedin, github].filter(isSet) },
-      { "@type": "ProfessionalService", "@id": `${SITE_URL}/#service`, name: `${name}, ${role}`, url: SITE_URL, description: content.seo.landing.description, provider: { "@id": `${SITE_URL}/#person` }, areaServed: "Worldwide" },
+      { "@type": "ProfessionalService", "@id": `${SITE_URL}/#service`, name: `${name}, ${role}`, url: SITE_URL, description: content.seo.landing.description, provider: { "@id": `${SITE_URL}/#person` }, areaServed },
     ],
   };
   return JSON.stringify(graph).replace(/</g, "\\u003c");
