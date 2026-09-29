@@ -24,11 +24,15 @@ export interface SiteHeaderProps {
   sticky?: boolean;
   /** Start with the mobile menu open (previews). */
   defaultOpen?: boolean;
+  /** Href of the current page; that link gets aria-current="page". */
+  currentHref?: string;
+  /** Below lg, keep the last CTA visible next to the menu button. */
+  pinCtaOnMobile?: boolean;
   className?: string;
 }
 
 /** Site header. Desktop: logo · links · CTAs. Below lg: logo + ink hamburger disc opening a full-width panel. */
-export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "bar", notchTone = "cream", sticky = true, defaultOpen = false, className }: SiteHeaderProps) {
+export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "bar", notchTone = "cream", sticky = true, defaultOpen = false, currentHref, pinCtaOnMobile = false, className }: SiteHeaderProps) {
   const [open, setOpen] = React.useState(defaultOpen);
   const reduce = useReducedMotion();
   const panelId = React.useId();
@@ -47,23 +51,29 @@ export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-8 m-0 p-0 list-none">
             {links.map((l) => (
-              <li key={l.href}><a href={l.href} className="ac-focus rounded-sm font-body text-body-md text-ink no-underline hover:underline underline-offset-4">{l.label}</a></li>
+              <li key={l.href}><a href={l.href} aria-current={l.href === currentHref ? "page" : undefined} className={cx("ac-focus rounded-sm font-body text-body-md text-ink no-underline hover:underline underline-offset-4", l.href === currentHref && "underline")}>{l.label}</a></li>
             ))}
           </ul>
         </nav>
         <div className="hidden lg:flex items-center gap-3">
           {ctas.map((c, i) => <Button key={c.href + i} href={c.href} size="md" variant={c.variant ?? (i === ctas.length - 1 ? "primary" : "secondary")}>{c.label}</Button>)}
         </div>
-        <button
-          type="button"
-          className="ac-focus lg:hidden inline-flex items-center justify-center w-12 h-12 rounded-full bg-ink text-white border-0 cursor-pointer"
-          aria-expanded={open}
-          aria-controls={panelId}
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? <X size={22} strokeWidth={1.75} aria-hidden /> : <Menu size={22} strokeWidth={1.75} aria-hidden />}
-        </button>
+        <div className="lg:hidden flex items-center gap-2">
+          {pinCtaOnMobile && ctas.length > 0 && (() => {
+            const c = ctas[ctas.length - 1];
+            return <Button href={c.href} size="sm" variant={c.variant ?? "primary"}>{c.label}</Button>;
+          })()}
+          <button
+            type="button"
+            className="ac-focus inline-flex items-center justify-center w-12 h-12 rounded-full bg-ink text-white border-0 cursor-pointer"
+            aria-expanded={open}
+            aria-controls={panelId}
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((o) => !o)}
+          >
+            {open ? <X size={22} strokeWidth={1.75} aria-hidden /> : <Menu size={22} strokeWidth={1.75} aria-hidden />}
+          </button>
+        </div>
       </div>
       <AnimatePresence>
         {open && (
@@ -78,7 +88,7 @@ export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "
             <nav aria-label="Mobile">
               <ul className="flex flex-col gap-4 m-0 p-0 list-none">
                 {links.map((l) => (
-                  <li key={l.href}><a href={l.href} onClick={() => setOpen(false)} className="ac-focus rounded-sm font-display text-heading-lg text-ink no-underline">{l.label}</a></li>
+                  <li key={l.href}><a href={l.href} aria-current={l.href === currentHref ? "page" : undefined} onClick={() => setOpen(false)} className={cx("ac-focus rounded-sm font-display text-heading-lg text-ink no-underline", l.href === currentHref && "underline underline-offset-4")}>{l.label}</a></li>
                 ))}
               </ul>
             </nav>
