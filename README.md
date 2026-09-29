@@ -35,8 +35,15 @@ Props interfaces live next to each component. The design-system artifact carries
 ## Freelancer site (Next.js)
 
 - `npm run dev`: local dev at http://localhost:3000
-- `npm run build:site`: static export to `out/` (deploy `out/` to Vercel, Netlify or Cloudflare Pages; on Vercel use the Next.js preset)
-- `npm test`: content unit tests + checks against the built HTML (run `build:site` first)
+- `npm run build`: static export to `out/` (`build:site` is kept as an alias)
+- `npm test`: content unit tests + checks against the built HTML (run `build` first)
+
+**Deploy:**
+| Host | Build command | Output / publish directory |
+|---|---|---|
+| Vercel | Next.js preset, build `npm run build` | `out` |
+| Netlify | build `npm run build` | `out` |
+| Cloudflare Pages | build `npm run build` | `out` |
 
 **Edit copy:** everything lives in `src/content/content.ts`. Components never hard-code text.
 

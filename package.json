@@ -5,12 +5,13 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "next dev",
+    "build": "next build",
     "build:site": "next build",
     "test": "node --test \"tests/*.test.*\"",
     "typecheck": "tsc -p .",
     "build:bundle": "node build.mjs",
     "build:css": "tailwindcss -c tailwind.config.js -i src/styles.css -o dist/bundle.css --minify",
-    "build": "npm run build:bundle && npm run build:css"
+    "build:lib": "npm run build:bundle && npm run build:css"
   },
   "keywords": [],
   "author": "",
