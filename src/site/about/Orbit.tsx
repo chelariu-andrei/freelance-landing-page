@@ -16,7 +16,7 @@ export function Orbit() {
       center={
         isSet(photo)
           ? <img src={photo} alt={o.photoAlt} className="w-full h-full object-cover rounded-full" />
-          : <span className="font-display text-display-lg text-ink" aria-label={o.photoAlt}>{o.monogram}</span>
+          : <span className="font-display text-display-lg text-ink" role="img" aria-label={o.photoAlt}>{o.monogram}</span>
       }
       items={o.items.map((it) => ({ id: it.id, label: it.label, x: it.x, y: it.y, size: it.size, icon: iconFor(it.icon, 28) }))}
     />
