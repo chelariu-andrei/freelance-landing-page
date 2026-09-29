@@ -73,6 +73,7 @@ export const content = {
       secondaryCta: { label: "See how I work", href: "#services" },
       pipelineLabel: "How it plugs in",
       pipeline: ["Existing backend", "APIs", "Data", "AI agent", "Tools", "Production"],
+      pipelineAriaLabel: "How AI plugs into your existing system",
     },
     servicesCta: "Discuss this",
     servicesMediaTitle: "You get",

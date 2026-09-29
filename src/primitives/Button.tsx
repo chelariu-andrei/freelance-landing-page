@@ -50,7 +50,7 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
 ) {
   const press = usePressMotion("button", animated && !disabled);
   const cls = buttonClasses(variant, size, fullWidth, className);
-  const inner = (<>{iconLeft}{children != null && <span>{children}</span>}{iconRight}</>);
+  const inner = (<>{iconLeft}{children != null && (iconLeft || iconRight ? <span>{children}</span> : children)}{iconRight}</>);
   if (href) {
     return (
       <motion.a ref={ref as any} href={disabled ? undefined : href} aria-disabled={disabled || undefined} className={cls} {...press} {...(rest as any)}>

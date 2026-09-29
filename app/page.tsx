@@ -1,11 +1,12 @@
-import { PageHero } from "@/site/PageHero";
+import { LandingHero } from "@/site/landing/LandingHero";
 import { Footer } from "@/site/Footer";
-import { content } from "@/content/content";
 
-export default function Page() {
+export default function LandingPage() {
   return (
     <>
-      <main><PageHero current="/" lines={content.landing.hero.lines} /></main>
+      <main>
+        <LandingHero />
+      </main>
       <Footer />
     </>
   );
