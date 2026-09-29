@@ -1,0 +1,60 @@
+/** Ac. Tailwind config — every value points at a token CSS variable (src/tokens/tokens.css). */
+const v = (n) => `var(--${n})`;
+module.exports = {
+  content: ["./src/**/*.{ts,tsx}", "./previews/src/**/*.tsx"],
+  corePlugins: { preflight: false },
+  theme: {
+    screens: { sm: "640px", md: "768px", lg: "1024px", xl: "1280px", "2xl": "1536px" },
+    colors: {
+      transparent: "transparent", current: "currentColor",
+      ink: v("ink"), black: v("black"), cream: v("cream"), stone: v("stone"), white: v("white"), line: v("line"),
+      yellow: v("yellow"), "yellow-hover": v("yellow-hover"), periwinkle: v("periwinkle"), mint: v("mint"), blush: v("blush"), coral: v("coral"),
+      "ink-muted": v("ink-muted"), "muted-on-dark": v("muted-on-dark"), "subtle-on-dark": v("subtle-on-dark"),
+      "line-on-dark": v("line-on-dark"), success: v("success"), warning: v("warning"), danger: v("danger"),
+      focus: v("focus"), "focus-on-dark": v("focus-on-dark"),
+    },
+    spacing: {
+      0: "0", px: "1px", 0.5: "2px",
+      1: v("space-1"), 2: v("space-2"), 3: v("space-3"), 4: v("space-4"), 5: v("space-5"), 6: v("space-6"),
+      8: v("space-8"), 10: v("space-10"), 12: v("space-12"), 16: v("space-16"), 20: v("space-20"),
+      24: v("space-24"), 32: v("space-32"), gutter: v("frame-gutter"),
+    },
+    borderRadius: {
+      none: "0", sm: v("radius-sm"), md: v("radius-md"), lg: v("radius-lg"), xl: v("radius-xl"),
+      "2xl": v("radius-2xl"), pill: v("radius-pill"), full: "50%",
+    },
+    fontFamily: { display: v("font-display"), body: v("font-body"), mono: "ui-monospace, SFMono-Regular, Menlo, monospace" },
+    fontSize: {
+      // Fluid: mobile value → desktop value measured from the references
+      price: ["clamp(4.5rem, 2rem + 9vw, 12rem)", { lineHeight: "0.9", letterSpacing: "-0.04em" }],
+      "display-xl": ["clamp(2.5rem, 1.6rem + 4.6vw, 7rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+      "display-lg": ["clamp(2.25rem, 1.5rem + 3.6vw, 5.5rem)", { lineHeight: "1.08", letterSpacing: "-0.03em" }],
+      "heading-xl": ["clamp(2rem, 1.5rem + 2.4vw, 4rem)", { lineHeight: "1.12", letterSpacing: "-0.02em" }],
+      "heading-lg": ["clamp(1.625rem, 1.3rem + 1.3vw, 2.75rem)", { lineHeight: "1.3", letterSpacing: "-0.02em" }],
+      lead: ["clamp(1.25rem, 1.05rem + 0.8vw, 1.875rem)", { lineHeight: "1.13", letterSpacing: "-0.02em" }],
+      "label-lg": ["clamp(1.25rem, 1.05rem + 0.8vw, 1.875rem)", { lineHeight: "1", letterSpacing: "-0.01em" }],
+      "nav-lg": ["clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem)", { lineHeight: "1.5" }],
+      "body-lg": ["clamp(1rem, 0.85rem + 0.7vw, 1.625rem)", { lineHeight: "1.4" }],
+      "body-md": ["1.125rem", { lineHeight: "1.5" }],
+      body: ["1rem", { lineHeight: "1.5" }],
+      sm: ["0.875rem", { lineHeight: "1.4" }],
+      caption: ["0.8125rem", { lineHeight: "1.25" }],
+      overline: ["0.8125rem", { lineHeight: "1.2", letterSpacing: "0.12em", fontWeight: "500" }],
+      micro: ["0.6875rem", { lineHeight: "1.2" }],
+      "button-lg": ["1.25rem", { lineHeight: "1" }],
+      button: ["1.125rem", { lineHeight: "1" }],
+      "button-sm": ["1rem", { lineHeight: "1" }],
+    },
+    fontWeight: { regular: "400", medium: "500", semibold: "600" },
+    boxShadow: { none: "none", hover: v("shadow-hover") },
+    transitionDuration: { fast: v("dur-fast"), base: v("dur-base"), slow: v("dur-slow") },
+    transitionTimingFunction: { out: v("ease-out"), "in-out": v("ease-in-out") },
+    maxWidth: { container: v("container"), wide: v("container-wide"), prose: "44rem", dot: v("space-4"), none: "none", full: "100%" },
+    extend: {
+      flexBasis: { topic: "10rem" },
+      width: { stat: "clamp(6rem, 2rem + 12vw, 16rem)", "tile-s": "96px", "tile-m": "112px", "tile-l": "128px", "tile-xl": "156px" },
+      height: { "btn-sm": "44px", "btn-md": "56px", "btn-lg": "72px", stat: "clamp(6rem, 2rem + 12vw, 16rem)", "tile-s": "96px", "tile-m": "112px", "tile-l": "128px", "tile-xl": "156px" },
+      minHeight: { "btn-sm": "44px", "btn-md": "56px", "btn-lg": "72px", stat: "clamp(6rem, 2rem + 12vw, 16rem)" },
+    },
+  },
+};

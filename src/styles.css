@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Motion tokens as CSS variables (tokens.json carries no motion family) */
+:root {
+  --dur-fast: 150ms; --dur-base: 300ms; --dur-slow: 600ms; --dur-hero: 900ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --frame-gutter: 16px; --container: 1440px; --container-wide: 1760px;
+}
+
+@layer components {
+  .ac-root { font-family: var(--font-body); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .ac-root *, .ac-root *::before, .ac-root *::after { box-sizing: border-box; }
+  .ac-root :where(h1, h2, h3, h4, p, ul, ol, figure) { margin: 0; }
+  .ac-root :where(ul, ol) { padding: 0; list-style: none; }
+  .ac-root :where(button, input, textarea, select) { font: inherit; }
+
+  /* Focus ring: 2px solid, offset 3px. Ink on light grounds, yellow on dark (.ac-dark) — both ≥3:1. */
+  .ac-focus:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+  .ac-dark .ac-focus:focus-visible, .ac-focus.ac-on-dark:focus-visible { outline-color: var(--focus-on-dark); }
+
+  /* Loading skeleton */
+  .ac-skeleton { background: var(--stone); border-radius: var(--radius-sm); position: relative; overflow: hidden; }
+  .ac-skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    animation: ac-shimmer 1.4s var(--ease-in-out) infinite; }
+  @keyframes ac-shimmer { to { transform: translateX(100%); } }
+
+  /* Header notch: the cream tab cut into the top of a dark frame, with inverted corners */
+  .ac-notch { position: relative; background: var(--notch-bg, var(--cream)); border-radius: 0 0 var(--radius-xl) var(--radius-xl); }
+  .ac-notch::before, .ac-notch::after { content: ""; position: absolute; top: 0; width: var(--radius-xl); height: var(--radius-xl); pointer-events: none; }
+  .ac-notch::before { right: 100%; background: radial-gradient(circle at 0 100%, transparent calc(var(--radius-xl) - 0.5px), var(--notch-bg, var(--cream)) var(--radius-xl)); }
+  .ac-notch::after { left: 100%; background: radial-gradient(circle at 100% 100%, transparent calc(var(--radius-xl) - 0.5px), var(--notch-bg, var(--cream)) var(--radius-xl)); }
+
+  .ac-dashed-loop { border: 1.5px dashed var(--muted-on-dark); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-skeleton::after { animation: none; }
+  .ac-root *, .ac-root *::before, .ac-root *::after { transition-duration: 1ms !important; }
+}

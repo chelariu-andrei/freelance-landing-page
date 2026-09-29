@@ -1,0 +1,61 @@
+/* Ac. design tokens — mirror of tokens.json. Every component reads these; no raw values in components. */
+:root {
+  /* Color: surfaces */
+  --ink: #1c1b1f;
+  --black: #000000;
+  --cream: #f9f6f0;
+  --stone: #eae7e1;
+  --white: #ffffff;
+  --line: #e4e1db;
+  /* Color: accent + pastels */
+  --yellow: #ffd64e;
+  --yellow-hover: #f5c93a;
+  --periwinkle: #bccbf4;
+  --mint: #bfecc7;
+  --blush: #f9daf3;
+  --coral: #f7c1b5;
+  /* Color: text */
+  --ink-muted: #5f5e64;
+  --muted-on-dark: #afafaf;
+  --subtle-on-dark: #8a8a8a;
+  --line-on-dark: rgba(255, 255, 255, 0.72);
+  /* Semantic */
+  --success: #bfecc7;
+  --warning: #ffd64e;
+  --danger: #f7c1b5;
+  --focus: #1c1b1f;
+  --focus-on-dark: #ffd64e;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-2xl: 48px;
+  --radius-pill: 9999px;
+
+  /* Spacing (4px base) */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
+
+  /* Layout */
+  --frame-gutter: 16px;
+  --container: 1440px;
+  --container-wide: 1760px;
+
+  /* Elevation (hover only — the system is flat at rest) */
+  --shadow-hover: 0 8px 24px rgba(28, 27, 31, 0.08);
+
+  /* Type families */
+  --font-display: "Urbanist Variable", "Urbanist Variable Ext", "Urbanist", system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter Variable Ext", "Inter", system-ui, sans-serif;
+
+  /* Motion */
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+  --dur-hero: 900ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
