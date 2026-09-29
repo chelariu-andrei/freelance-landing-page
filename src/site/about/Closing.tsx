@@ -16,7 +16,7 @@ function StaticClosing() {
   const { c, primaryCta, secondaryCta } = useClosingProps();
   return (
     <section className="bg-cream px-2 lg:px-gutter py-2">
-      <div className="bg-ink ac-dark rounded-lg lg:rounded-xl px-5 md:px-10 lg:px-16 py-16 lg:py-24 flex flex-col items-center text-center gap-8">
+      <div className="bg-ink ac-dark rounded-lg lg:rounded-xl px-5 md:px-10 lg:px-16 py-16 lg:py-24 min-h-[480px] lg:min-h-[600px] flex flex-col items-center justify-center text-center gap-8">
         <h2 className="m-0 font-display font-regular text-display-lg max-w-[16ch] text-white">
           {c.title} <HighlightText variant="text">{c.highlight}</HighlightText>
         </h2>
