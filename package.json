@@ -5,7 +5,9 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/check-placeholders.mjs",
     "build": "next build",
+    "prebuild:site": "node scripts/check-placeholders.mjs",
     "build:site": "next build",
     "test": "node --test \"tests/*.test.*\"",
     "typecheck": "tsc -p .",
