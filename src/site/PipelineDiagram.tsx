@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { Chip } from "@/primitives/Chip";
 import { Stagger, StaggerItem } from "@/motion/Reveal";
 import { stagger } from "@/tokens/motion";
-import { cx } from "@/lib/cx";
 
 export interface PipelineDiagramProps {
   steps: string[];

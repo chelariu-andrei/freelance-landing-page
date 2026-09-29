@@ -47,8 +47,8 @@ test("landing hero: headline, trust line, CTAs and pipeline in order", () => {
   const html = page("index");
   assert.match(html, /Without a rewrite\./);
   assert.match(html, /\{\{YEARS\}\}\+ years · Java \/ Spring \/ Quarkus/);
-  assert.match(html, />Book a 30-min call</);
-  assert.match(html, /href="#services"[^>]*>See how I work</);
+  assert.match(html, />(?:<span[^>]*>)?Book a 30-min call</);
+  assert.match(html, /href="#services"[^>]*>(?:<span[^>]*>)?See how I work</);
   assert.match(html, /<ol aria-label="How AI plugs into your existing system"/);
   const steps = ["Existing backend", "APIs", "Data", "AI agent", "Tools", "Production"];
   let at = 0;
