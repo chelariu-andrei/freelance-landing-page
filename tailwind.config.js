@@ -1,7 +1,7 @@
 /** Ac. Tailwind config — every value points at a token CSS variable (src/tokens/tokens.css). */
 const v = (n) => `var(--${n})`;
 module.exports = {
-  content: ["./src/**/*.{ts,tsx}", "./previews/src/**/*.tsx"],
+  content: ["./src/**/*.{ts,tsx}", "./previews/src/**/*.tsx", "./app/**/*.{ts,tsx}"],
   corePlugins: { preflight: false },
   theme: {
     screens: { sm: "640px", md: "768px", lg: "1024px", xl: "1280px", "2xl": "1536px" },
