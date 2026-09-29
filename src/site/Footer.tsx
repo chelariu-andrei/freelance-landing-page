@@ -7,14 +7,14 @@ import { isSet, mailtoHref, resolveHref } from "@/content/links";
 export function Footer() {
   const { site, nav, footer } = content;
   const connect = [
-    ...(isSet(site.linkedin) ? [{ label: "LinkedIn", href: site.linkedin }] : []),
-    ...(isSet(site.github) ? [{ label: "GitHub", href: site.github }] : []),
-    ...(isSet(site.email) ? [{ label: "Email", href: mailtoHref(site.email) }] : []),
+    ...(isSet(site.linkedin) ? [{ label: footer.linkedinLabel, href: site.linkedin }] : []),
+    ...(isSet(site.github) ? [{ label: footer.githubLabel, href: site.github }] : []),
+    ...(isSet(site.email) ? [{ label: footer.emailLabel, href: mailtoHref(site.email) }] : []),
     { label: nav.cta, href: resolveHref(site.calLink) },
   ];
   const socials = [
-    ...(isSet(site.linkedin) ? [{ label: "LinkedIn", href: site.linkedin, icon: <Linkedin size={26} strokeWidth={1.75} /> }] : []),
-    ...(isSet(site.github) ? [{ label: "GitHub", href: site.github, icon: <Github size={26} strokeWidth={1.75} /> }] : []),
+    ...(isSet(site.linkedin) ? [{ label: footer.linkedinLabel, href: site.linkedin, icon: <Linkedin size={26} strokeWidth={1.75} /> }] : []),
+    ...(isSet(site.github) ? [{ label: footer.githubLabel, href: site.github, icon: <Github size={26} strokeWidth={1.75} /> }] : []),
   ];
   return (
     <SiteFooter

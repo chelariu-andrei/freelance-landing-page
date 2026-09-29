@@ -45,6 +45,9 @@ export const content = {
     tagline: "AI for existing Java systems. Without a rewrite.",
     pagesTitle: "Pages",
     connectTitle: "Connect",
+    linkedinLabel: "LinkedIn",
+    githubLabel: "GitHub",
+    emailLabel: "Email",
     privacy: "This site uses no cookies and no tracking.",
   },
   seo: {
