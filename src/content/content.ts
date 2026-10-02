@@ -7,11 +7,41 @@ export type IconKey =
 export interface NavLink { label: string; href: string }
 /** One step of the Discover → Build → Test & launch path shared by all services. */
 export interface ProcessStep { name: string; text: string }
-/** Text of a service's animated diagram: the spoken label plus the words drawn inside it (keys are read by ServiceVisuals). */
-export interface ServiceVisual { ariaLabel: string; labels: Record<string, string> }
+/** 01: one inbound document run through the agent, its guardrails, and out to an API or a person. */
+export interface AgentCase {
+  file: string; from: string;
+  /** Fields the agent extracts, as [key, value] pairs. */
+  fields: [string, string][];
+  checks: { label: string; ok: boolean }[];
+  route: "api" | "human";
+  result: string;
+}
+/** 02: one span of a request trace; `start` and `ms` are milliseconds from the request's start. */
+export interface TraceSpan { layer: string; name: string; start: number; ms: number }
+/** 03: one module of the system being modernized. */
+export interface LegacyModule { name: string; state: "done" | "active" | "legacy" }
+/**
+ * Text of a service's animated diagram: the spoken label, the words drawn inside it (keys read by ServiceVisuals),
+ * the worked example it plays, and that example's data.
+ */
+export interface ServiceVisual {
+  ariaLabel: string;
+  /** One sentence under the diagram naming the scenario it plays. */
+  example: string;
+  labels: Record<string, string>;
+  cases?: AgentCase[];
+  spans?: TraceSpan[];
+  /** Share of traffic on the new code at each step of the rollout, in percent. */
+  ramp?: number[];
+  modules?: LegacyModule[];
+}
 export interface Service {
   id: string; number: string; label: string; icon: IconKey; tone: "cream" | "yellow";
   forWho: string; youGet: string; outcome: string; visual: ServiceVisual; price: string;
+  /** Engineering practices that keep it safe in production; three short lines. */
+  safeguards: string[];
+  /** Tools it is usually built with. */
+  stack: string[];
   /** One line for the overview cards. */
   summary: string;
 }
@@ -125,40 +155,84 @@ export const content = {
     },
     servicesCta: "Discuss this",
     servicesAriaLabel: "Services",
-    serviceLabels: { forWho: "For:", youGet: "You get:", outcome: "Outcome:" },
+    serviceLabels: { forWho: "For:", youGet: "You get:", outcome: "Outcome:", safeguards: "Built in", stack: "Usually built with" },
     services: [
       {
         id: "automation", number: "01", label: "AI Automation", icon: "implement", tone: "cream",
-        forWho: "Teams with repetitive workflows, or a hunch that AI could save time but no clear place to start.",
-        youGet: "AI agents, chatbots, integrations, RAG, MCP/tools and workflow automation, built into your existing stack.",
-        outcome: "Working automation in production, with guardrails, tests and handover.",
+        forWho: "Teams buried in repetitive inbound work: invoices, tickets and forms that someone retypes into another system.",
+        youGet: "Agents that read the input, call your systems through typed tools (MCP or plain Java interfaces) and act, with retrieval over your own documents where context matters.",
+        outcome: "Work is handled as it arrives. Anything uncertain lands with a person, with the reason attached.",
+        safeguards: [
+          "Model output is validated against a schema before anything is written.",
+          "Every prompt or model change runs against an eval set of real past cases before it ships.",
+          "Business rules and confidence thresholds decide: act, or hand over to a human.",
+        ],
+        stack: ["Spring AI", "LangChain4j", "MCP", "pgvector", "OpenTelemetry"],
         visual: {
-          ariaLabel: "Diagram: incoming emails, tickets and forms go to an AI agent, pass a guardrails check, then act through your APIs or go to human review when unsure.",
-          labels: { events: "Incoming", email: "Email", ticket: "Ticket", form: "Form", agent: "AI agent", agentNote: "reads context, decides", guardrails: "Guardrails + evals", guardrailsNote: "checked before it acts", api: "Your APIs", apiNote: "it acts", human: "Human review", humanNote: "when unsure" },
+          ariaLabel: "Diagram: a supplier invoice arrives by email, an AI agent extracts supplier, PO and amount, guardrails check them against the ERP, and the invoice is either booked through the ERP API or routed to accounts payable with the reason.",
+          example: "Example: supplier invoices arrive by email. Clean ones are booked in the ERP, mismatches go to accounts payable.",
+          labels: { inbox: "Inbox", agent: "AI agent", agentNote: "extracts fields", guardrails: "Guardrails", api: "ERP API", human: "Human review", running: "running", done: "done" },
+          cases: [
+            {
+              file: "INV-2291.pdf", from: "billing@acme-supplies.example",
+              fields: [["supplier", "Acme Supplies"], ["po", "PO-7781"], ["amount", "4,180.00 EUR"]],
+              checks: [{ label: "PO-7781 exists in ERP", ok: true }, { label: "Amount within ±2% of PO", ok: true }, { label: "Confidence 0.94 ≥ 0.85", ok: true }],
+              route: "api", result: "POST /erp/payables → 201 Created",
+            },
+            {
+              file: "INV-2304.pdf", from: "ar@northwind-freight.example",
+              fields: [["supplier", "Northwind Freight"], ["po", "PO-7790"], ["amount", "12,460.00 EUR"]],
+              checks: [{ label: "PO-7790 exists in ERP", ok: true }, { label: "Amount +12% over PO", ok: false }, { label: "Confidence 0.91 ≥ 0.85", ok: true }],
+              route: "human", result: "Queued for AP · amount differs from PO",
+            },
+          ],
         },
         price: "from {{PRICE_AUTOMATION}}",
         summary: "Agents, chatbots and workflow automation, built into the stack you already run.",
       },
       {
         id: "tools", number: "02", label: "Custom Software", icon: "platform", tone: "yellow",
-        forWho: "Companies that need an internal tool nobody sells off the shelf.",
-        youGet: "Web apps, internal tools and backends built end to end: API, UI, deployment. AI inside where it helps.",
-        outcome: "Software your team actually uses, with source code you own, running on your infrastructure.",
+        forWho: "Companies running a key process on spreadsheets, email threads or a tool that almost fits.",
+        youGet: "A web app built end to end: React UI, a Spring Boot API with an OpenAPI contract, PostgreSQL, CI/CD and deployment on your cloud. AI inside where it helps.",
+        outcome: "A tool your team uses every day, with source code, docs and a runbook that belong to you.",
+        safeguards: [
+          "Contract-first API, so other systems and AI agents can plug in later.",
+          "Flyway migrations and Testcontainers integration tests, run in CI on every commit.",
+          "Tracing, metrics and an audit log from day one, not bolted on later.",
+        ],
+        stack: ["React", "TypeScript", "Spring Boot", "PostgreSQL", "Docker"],
         visual: {
-          ariaLabel: "Diagram: a custom software stack built layer by layer, from data and backend through an API to a React interface, deployed on your cloud with source code you own.",
-          labels: { ui: "React UI", uiNote: "a tool your team uses without training", api: "API", apiNote: "clean seams for AI and integrations", backend: "Backend", backendNote: "Java / Spring Boot", data: "Data", dataNote: "PostgreSQL", owned: "Your cloud · your source code" },
+          ariaLabel: "Diagram: in a returns desk app, approving a refund sends one request through the API, the refund policy, the database, the audit log and the payment provider, shown as a trace with timings.",
+          example: "Example: a retail returns desk replaces a shared spreadsheet. One click runs the whole refund, traced end to end.",
+          labels: { app: "Returns desk", order: "Order #48213", items: "2 items · 84.90 EUR", approve: "Approve refund", trace: "trace", response: "201 Created", owned: "Your repo · your cloud · your runbook" },
+          spans: [
+            { layer: "API", name: "POST /api/returns", start: 0, ms: 84 },
+            { layer: "Domain", name: "RefundPolicy.evaluate()", start: 4, ms: 9 },
+            { layer: "DB", name: "SELECT order, items", start: 14, ms: 6 },
+            { layer: "DB", name: "INSERT return, audit_log", start: 22, ms: 8 },
+            { layer: "Ext", name: "payments.refund()", start: 32, ms: 49 },
+          ],
         },
         price: "from {{PRICE_TOOLS}}",
         summary: "Scalable software built end to end, with the source code owned by you.",
       },
       {
         id: "legacy", number: "03", label: "Legacy Modernization", icon: "legacy", tone: "cream",
-        forWho: "Teams whose system works, but is hard to change: slow releases, ageing frameworks, code nobody wants to touch.",
-        youGet: "AI-assisted analysis, migration and refactoring, with guardrails and tests. Java/Spring is my home turf.",
-        outcome: "A codebase that is faster to change, modernized step by step instead of rewritten.",
+        forWho: "Teams whose system works but is hard to change: Java EE or old Spring, slow releases, code nobody wants to touch.",
+        youGet: "Modernization one module at a time behind a routing layer (the strangler fig pattern): behaviour pinned by tests first, then moved to Java 21 and Spring Boot 3, with AI-assisted analysis and refactoring.",
+        outcome: "Faster releases and smaller risk, without a big-bang rewrite or a frozen roadmap.",
+        safeguards: [
+          "Characterization tests pin today's behaviour before a line changes.",
+          "Traffic shifts gradually while responses are compared against the old code.",
+          "Rollback is a routing change, not a redeploy.",
+        ],
+        stack: ["Java 21", "Spring Boot 3", "OpenRewrite", "Testcontainers", "Kubernetes"],
         visual: {
-          ariaLabel: "Diagram: modules move one at a time from the legacy system to the modernized one, each passing its tests, while the system stays live.",
-          labels: { before: "Legacy", after: "Modernized", m1: "Orders", m2: "Billing", m3: "Reports", m4: "Auth", tested: "tested", live: "Live the whole time · no downtime" },
+          ariaLabel: "Diagram: a gateway shifts billing traffic from a Java EE monolith to a new Spring Boot service in steps of 1, 10, 50 and 100 percent, while a shadow comparison checks the responses match.",
+          example: "Example: billing moves out of a Java EE monolith. Traffic ramps up only while the shadow diffs stay at zero.",
+          labels: { gateway: "Gateway", gatewayNote: "routes /billing/**", legacy: "Monolith", legacyNote: "Java EE 7", modern: "billing-service", modernNote: "Spring Boot 3 · Java 21", shadow: "Shadow compare", compared: "compared", diffs: "diffs", rollback: "Rollback = flip the route", live: "Live the whole time" },
+          ramp: [0, 1, 10, 50, 100],
+          modules: [{ name: "Orders", state: "done" }, { name: "Billing", state: "active" }, { name: "Reports", state: "legacy" }, { name: "Auth", state: "legacy" }],
         },
         price: "from {{PRICE_LEGACY}}",
         summary: "Modernize your core system step by step, without a rewrite.",
@@ -166,7 +240,7 @@ export const content = {
     ] as Service[],
     stats: [
       { parts: [{ text: "Small steps," }, { icon: "steps", label: "steady progress" }, { text: "not rewrites." }], arrow: true },
-      { parts: [{ value: "100%" }, { text: "of the code is yours." }] },
+      { parts: [{ text: "So production" }, { icon: "process", label: "safely" }, { text: "never notices." }] },
     ] as Stat[],
     contact: {
       title: "Bring the problem. Leave with a plan.",

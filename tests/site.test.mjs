@@ -60,7 +60,8 @@ test("landing sections in order: services, stats, contact", () => {
   }
   // ArrowCta renders its label 3 times per instance: 2 invisible grid positioning spans + 1 animated visible span.
   assert.equal(count(html, />Discuss this</g), 9);
-  assert.match(html, /of the code is yours\./);
+  assert.match(html, /never notices\./);
+  assert.doesNotMatch(html, /of the code is yours/);
   assert.match(html, /Bring the problem\. Leave with a plan\./);
   assert.match(html, />Book a discovery call</);
 });

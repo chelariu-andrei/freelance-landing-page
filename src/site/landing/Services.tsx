@@ -1,4 +1,5 @@
 "use client";
+import { Check } from "lucide-react";
 import { FeatureStep } from "@/sections/FeatureStep";
 import { visualFor } from "@/site/landing/ServiceVisuals";
 import { ArrowCta } from "@/primitives/ArrowCta";
@@ -21,10 +22,34 @@ export function Services() {
           mediaSide={i % 2 === 0 ? "right" : "left"}
           icon={iconFor(s.icon)}
           body={
-            <div className="flex flex-col gap-4">
-              <p className="m-0"><strong>{serviceLabels.forWho}</strong> {s.forWho}</p>
-              <p className="m-0"><strong>{serviceLabels.youGet}</strong> {s.youGet}</p>
-              <p className="m-0"><strong>{serviceLabels.outcome}</strong> {s.outcome}</p>
+            <div className="flex flex-col gap-8">
+              {/* The problem, in the reader's words, carries the display voice; the engineering detail reads as body text. */}
+              <p className="m-0">{s.forWho}</p>
+              <div className="flex flex-col gap-3 font-body text-body-md text-ink">
+                <p className="m-0"><strong className="font-medium">{serviceLabels.youGet}</strong> {s.youGet}</p>
+                <p className="m-0"><strong className="font-medium">{serviceLabels.outcome}</strong> {s.outcome}</p>
+              </div>
+              <div className="flex flex-col gap-3">
+                <p className="m-0 font-body text-body-md font-medium text-ink">{serviceLabels.safeguards}</p>
+                <ul className="m-0 p-0 list-none flex flex-col gap-2 font-body text-body-md text-ink">
+                  {s.safeguards.map((g) => (
+                    <li key={g} className="flex gap-3">
+                      <span aria-hidden className={`mt-[3px] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${s.tone === "yellow" ? "bg-ink text-yellow" : "bg-yellow text-ink"}`}>
+                        <Check size={12} strokeWidth={2.5} />
+                      </span>
+                      {g}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex flex-col gap-3">
+                <p className="m-0 font-body text-sm text-ink-muted">{serviceLabels.stack}</p>
+                <ul className="m-0 p-0 list-none flex flex-wrap gap-2">
+                  {s.stack.map((t) => (
+                    <li key={t} className="rounded-pill border border-solid border-ink px-3 py-1 font-body text-sm text-ink">{t}</li>
+                  ))}
+                </ul>
+              </div>
               <ArrowCta size="lg" label={servicesCta} href={cal} tone={s.tone === "yellow" ? "white" : "yellow"} className="self-start" />
             </div>
           }
