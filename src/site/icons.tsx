@@ -1,10 +1,10 @@
-import { FileJson, Bot, Link2, Plug, Workflow, Repeat, Search, Cog, LayoutDashboard, RefreshCw, Code2, ShieldCheck } from "lucide-react";
+import { FileJson, Bot, Link2, Plug, Workflow, Repeat, Search, Cog, LayoutDashboard, RefreshCw, Code2, ShieldCheck, Footprints, Rocket, Users, Layers, CalendarDays } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { IconKey } from "@/content/content";
 
 const map: Partial<Record<IconKey, LucideIcon>> = {
   mongodb: FileJson, springai: Bot, langchain4j: Link2, mcp: Plug, n8n: Workflow, make: Repeat,
-  audit: Search, implement: Cog, platform: LayoutDashboard, legacy: RefreshCw, agents: Bot, code: Code2, process: ShieldCheck,
+  audit: Search, implement: Cog, platform: LayoutDashboard, legacy: RefreshCw, agents: Bot, code: Code2, process: ShieldCheck, steps: Footprints, shipped: Rocket, mentor: Users, stack: Layers, years: CalendarDays,
 };
 
 /** Original brand marks (devicon), served from /public/logos. */
@@ -13,9 +13,9 @@ const logos: Partial<Record<IconKey, string>> = {
   gcp: "gcp", terraform: "terraform", kubernetes: "kubernetes", docker: "docker", nextjs: "nextjs",
 };
 
-export function iconFor(key: IconKey, size = 26, strokeWidth = 1.75) {
+export function iconFor(key: IconKey, size = 26, strokeWidth = 1.75, className?: string) {
   const logo = logos[key];
   if (logo) return <img src={`/logos/${logo}.svg`} width={size} height={size} alt="" aria-hidden className="block object-contain" />;
   const I = map[key]!;
-  return <I size={size} strokeWidth={strokeWidth} aria-hidden />;
+  return <I size={size} strokeWidth={strokeWidth} aria-hidden className={className} />;
 }

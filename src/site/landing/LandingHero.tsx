@@ -3,7 +3,7 @@ import { PageHero } from "@/site/PageHero";
 import { ArrowCta } from "@/primitives/ArrowCta";
 import { Button } from "@/primitives/Button";
 import { ArrowDown } from "lucide-react";
-import { PipelineDiagram } from "@/site/PipelineDiagram";
+import { HeroTerminal } from "@/site/HeroTerminal";
 import { content } from "@/content/content";
 import { resolveHref } from "@/content/links";
 
@@ -22,12 +22,7 @@ export function LandingHero() {
       lines={h.lines}
       subtitle={<>{h.subtitle}<span className="block mt-4 font-body text-body-md text-muted-on-dark">{h.trust}</span></>}
       action={action}
-      aside={
-        <div className="rounded-lg border border-solid border-line-on-dark p-5 lg:p-8">
-          <p className="m-0 mb-4 font-body text-overline uppercase text-muted-on-dark">{h.pipelineLabel}</p>
-          <PipelineDiagram steps={h.pipeline} ariaLabel={h.pipelineAriaLabel} />
-        </div>
-      }
+      aside={<HeroTerminal {...h.terminal} className="w-full max-w-[30rem] lg:max-w-[34rem] xl:max-w-[37rem] lg:ml-auto" />}
     />
   );
 }

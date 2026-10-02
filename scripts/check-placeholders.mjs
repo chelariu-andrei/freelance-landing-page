@@ -18,6 +18,10 @@ if (tokens.length > 0) {
   console.log("No unfilled placeholders found in src/content/content.ts.");
 }
 
+if (src.includes("ILLUSTRATIVE")) {
+  console.warn("Warning: src/content/content.ts still contains ILLUSTRATIVE values (about.experience). Replace them with real numbers.");
+}
+
 const urlMatch = src.match(/url:\s*"([^"]*)"/);
 const contentUrl = urlMatch ? urlMatch[1] : "";
 const effectiveUrl = process.env.NEXT_PUBLIC_SITE_URL || contentUrl;

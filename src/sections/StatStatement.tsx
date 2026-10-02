@@ -1,6 +1,7 @@
 import * as React from "react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { cx } from "../lib/cx";
-import { Reveal } from "../motion/Reveal";
+import { duration as D, ease as E, stagger as S } from "../tokens/motion";
 
 export type StatPart =
   | { kind: "text"; text: string }
@@ -23,28 +24,77 @@ export interface StatStatementProps {
   className?: string;
 }
 
+const ROW_GAP = 0.35;
+
+/**
+ * Scroll choreography, one row after the other: the white pill wipes open from the left, the words rise
+ * into place, the yellow bubbles pop, and finally the stone disc rolls in with its arrow dropping down.
+ * Under reduced motion everything simply fades.
+ */
+function rowVariants(reduce: boolean, ri: number) {
+  const at = ri * ROW_GAP;
+  const fade: Variants = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: D.base, delay: at } } };
+  if (reduce) return { pill: fade, word: fade, bubble: fade, disc: fade, arrow: fade };
+  const pill: Variants = {
+    hidden: { opacity: 0, clipPath: "inset(0% 100% 0% 0% round 999px)" },
+    show: { opacity: 1, clipPath: "inset(0% 0% 0% 0% round 999px)", transition: { duration: D.hero, delay: at, ease: E.out } },
+  };
+  const word: Variants = {
+    hidden: { opacity: 0, y: "0.5em", filter: "blur(6px)" },
+    show: (i: number) => ({ opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: D.slow, delay: at + 0.25 + i * S.base, ease: E.out } }),
+  };
+  const bubble: Variants = {
+    hidden: { opacity: 0, scale: 0.4, rotate: -20 },
+    show: (i: number) => ({ opacity: 1, scale: 1, rotate: 0, transition: { type: "spring", stiffness: 380, damping: 18, delay: at + 0.3 + i * S.base } }),
+  };
+  const disc: Variants = {
+    hidden: { opacity: 0, x: -64, rotate: -90 },
+    show: { opacity: 1, x: 0, rotate: 0, transition: { duration: D.hero, delay: at + 0.55, ease: E.out } },
+  };
+  const arrow: Variants = {
+    hidden: { opacity: 0, y: -24 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 14, delay: at + 1.1 } },
+  };
+  return { pill, word, bubble, disc, arrow };
+}
+
 /** Big white pills carrying a sentence with yellow icon/value bubbles ("In minutes ⏱ not months", "Up to 90% savings…"). */
 export function StatStatement({ rows, stepped = true, animated = true, background, className }: StatStatementProps) {
+  const reduce = !!useReducedMotion();
+  const on = animated;
   return (
     <section className={cx("relative bg-cream py-10 lg:py-16 px-2 lg:px-gutter overflow-hidden", className)}>
       {background}
-      <div className="relative z-10 mx-auto max-w-wide flex flex-col">
+      <motion.div
+        className="relative z-10 mx-auto max-w-wide flex flex-col"
+        initial={on ? "hidden" : false}
+        whileInView={on ? "show" : undefined}
+        viewport={{ once: false, amount: 0.35 }}
+      >
         {rows.map((row, ri) => {
-          const content = (
-            <div className={cx("flex items-start", stepped && ri > 0 && "lg:pl-20")}>
-              <p className="m-0 flex flex-wrap items-center gap-x-4 lg:gap-x-8 gap-y-3 bg-white rounded-pill px-8 lg:px-24 py-6 min-h-stat font-display text-heading-xl lg:text-display-lg text-ink">
-                {row.parts.map((p, pi) =>
-                  p.kind === "text" ? <span key={pi}>{p.text}</span> :
-                  p.kind === "value" ? <span key={pi} className="inline-flex items-center bg-yellow rounded-pill px-5 lg:px-12 py-1 lg:py-4">{p.text}</span> :
-                  <span key={pi} role={p.label ? "img" : undefined} aria-label={p.label} aria-hidden={p.label ? undefined : true} className="inline-flex items-center justify-center bg-yellow rounded-full w-12 h-12 lg:w-32 lg:h-32">{p.icon}</span>
-                )}
-              </p>
-              {row.bubble && <span aria-hidden className="hidden md:inline-flex self-start items-center justify-center shrink-0 w-stat h-stat bg-stone rounded-full -ml-1">{row.bubble}</span>}
+          const v = rowVariants(reduce, ri);
+          return (
+            <div key={ri} className={cx("flex items-start", stepped && ri > 0 && "lg:pl-20")}>
+              <motion.p
+                variants={on ? v.pill : undefined}
+                className="m-0 flex flex-wrap items-center gap-x-4 lg:gap-x-8 gap-y-3 bg-white rounded-pill px-8 lg:px-24 py-6 min-h-stat font-display text-heading-xl lg:text-display-lg text-ink"
+              >
+                {row.parts.map((p, pi) => {
+                  const common = { custom: pi, variants: on ? (p.kind === "text" ? v.word : v.bubble) : undefined };
+                  return p.kind === "text" ? <motion.span key={pi} className="inline-block" {...common}>{p.text}</motion.span> :
+                    p.kind === "value" ? <motion.span key={pi} className="inline-flex items-center bg-yellow rounded-pill px-5 lg:px-12 py-1 lg:py-4 tabular-nums" {...common}>{p.text}</motion.span> :
+                    <motion.span key={pi} role={p.label ? "img" : undefined} aria-label={p.label} aria-hidden={p.label ? undefined : true} className="inline-flex items-center justify-center bg-yellow rounded-full w-12 h-12 lg:w-32 lg:h-32" {...common}>{p.icon}</motion.span>;
+                })}
+              </motion.p>
+              {row.bubble && (
+                <motion.span aria-hidden variants={on ? v.disc : undefined} className="hidden md:inline-flex self-start items-center justify-center shrink-0 w-stat h-stat bg-stone rounded-full -ml-1">
+                  <motion.span className="inline-flex" variants={on ? v.arrow : undefined}>{row.bubble}</motion.span>
+                </motion.span>
+              )}
             </div>
           );
-          return animated ? <Reveal key={ri} delay={ri * 0.12} variant={ri % 2 ? "left" : "right"} distance={48}>{content}</Reveal> : <React.Fragment key={ri}>{content}</React.Fragment>;
         })}
-      </div>
+      </motion.div>
     </section>
   );
 }

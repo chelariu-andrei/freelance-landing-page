@@ -1,5 +1,6 @@
 import { LandingHero } from "@/site/landing/LandingHero";
 import { Services } from "@/site/landing/Services";
+import { ServicesOverview } from "@/site/landing/ServicesOverview";
 import { Stats } from "@/site/landing/Stats";
 import { Contact } from "@/site/landing/Contact";
 import { Footer } from "@/site/Footer";
@@ -12,6 +13,7 @@ export default function LandingPage() {
     <>
       <main>
         <LandingHero />
+        <ServicesOverview />
         <Services />
         <Stats />
         <Contact />

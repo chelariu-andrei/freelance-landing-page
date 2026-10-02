@@ -52,17 +52,24 @@ test("expertise placeholder copy", () => {
 test("landing sections in order: services, stats, contact", () => {
   const html = page("index");
   const iServices = html.indexOf('id="services"');
-  const iStats = html.indexOf("rewrites required.");
+  const iStats = html.indexOf("not rewrites.");
   const iContact = html.indexOf('id="contact"');
   assert.ok(iServices > 0 && iStats > iServices && iContact > iStats, "order");
-  for (const s of ["AI Automation Audit", "Automation Implementation", "Custom AI Platform / Internal Tools", "Legacy Modernization Acceleration"]) {
+  for (const s of ["AI Automation", "Custom Software", "Legacy Modernization"]) {
     assert.match(html, new RegExp(s.replace(/[/]/g, "\\/")), s);
   }
   // ArrowCta renders its label 3 times per instance: 2 invisible grid positioning spans + 1 animated visible span.
-  assert.equal(count(html, />Discuss this</g), 12);
-  assert.match(html, /small, fixed-scope first step\./);
-  assert.match(html, /needs to reach production\?/);
+  assert.equal(count(html, />Discuss this</g), 9);
+  assert.match(html, /of the code is yours\./);
+  assert.match(html, /Bring the problem\. Leave with a plan\./);
   assert.match(html, />Book a discovery call</);
+});
+
+test("process is shown once; each service has its own labelled diagram", () => {
+  const html = page("index");
+  assert.equal(count(html, />How it runs</g), 1);
+  assert.doesNotMatch(html, /follows the same path/);
+  assert.equal(count(html, /role="img" aria-label="Diagram:/g), 3);
 });
 
 test("prices hidden while pricingMode is hidden", () => {
@@ -71,13 +78,18 @@ test("prices hidden while pricingMode is hidden", () => {
 
 test("about sections in order", () => {
   const html = page("about");
-  const order = ["survive production.", "years inside large Java systems", "Two disciplines, one engineer.", "Tools I ship with.", "next challenge."];
+  const order = ["survive production.", "years inside large Java systems", "The work behind the promise.", "projects shipped to production", "Two disciplines, one engineer.", "Tools I ship with.", "next challenge."];
   let at = 0;
   for (const s of order) {
     const i = html.indexOf(s, at);
     assert.ok(i >= at && i !== -1, `order: ${s}`);
     at = i + 1;
   }
+});
+
+test("experience figures render their final values in the static HTML", () => {
+  const html = page("about");
+  for (const v of [">30+<", ">12<", ">25+<"]) assert.ok(html.includes(v), v);
 });
 
 test("closing section is in the static HTML (works without JS/WebGL)", () => {
@@ -101,7 +113,7 @@ test("stack carousel lists tech, no client logos", () => {
 });
 
 test("per-page title, description, canonical and OG", () => {
-  const cases = [["index", "/", "AI for existing Java systems"], ["about", "/about", "About · Andrei Chelariu"], ["expertise", "/expertise", "Expertise · Andrei Chelariu"]];
+  const cases = [["index", "/", "AI automation, custom software"], ["about", "/about", "About · Andrei Chelariu"], ["expertise", "/expertise", "Expertise · Andrei Chelariu"]];
   for (const [p, path, title] of cases) {
     const html = page(p);
     assert.match(html, new RegExp(`<title>[^<]*${title}`), p);

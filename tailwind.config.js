@@ -23,7 +23,7 @@ module.exports = {
       none: "0", sm: v("radius-sm"), md: v("radius-md"), lg: v("radius-lg"), xl: v("radius-xl"),
       "2xl": v("radius-2xl"), pill: v("radius-pill"), full: "50%",
     },
-    fontFamily: { display: v("font-display"), body: v("font-body"), mono: "ui-monospace, SFMono-Regular, Menlo, monospace" },
+    fontFamily: { display: v("font-display"), body: v("font-body"), mono: "var(--font-mono, ui-monospace), ui-monospace, SFMono-Regular, Menlo, monospace" },
     fontSize: {
       // Fluid: mobile value → desktop value measured from the references
       price: ["clamp(4.5rem, 2rem + 9vw, 12rem)", { lineHeight: "0.9", letterSpacing: "-0.04em" }],

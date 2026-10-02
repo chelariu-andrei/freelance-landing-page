@@ -22,7 +22,7 @@ export interface RevealProps {
   amount?: number;
   /** Play on mount instead of on scroll (hero entrance). Default false. */
   immediate?: boolean;
-  as?: "div" | "section" | "li" | "span" | "article" | "header" | "footer";
+  as?: "div" | "section" | "ol" | "ul" | "li" | "span" | "article" | "header" | "footer";
   className?: string;
 }
 

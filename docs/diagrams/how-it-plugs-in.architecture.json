@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "How AI plugs into your existing system",
+    "output": "how-it-plugs-in.html",
+    "animation": "trace",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "backend", "type": "backend", "label": "Existing backend", "sublabel": "Java / Spring", "pos": [40, 150], "size": [150, 64] },
+    { "id": "apis", "type": "cloud", "label": "APIs", "sublabel": "stable contracts", "pos": [250, 150], "size": [150, 64] },
+    { "id": "data", "type": "database", "label": "Data", "sublabel": "your own records", "pos": [460, 150], "size": [150, 64] },
+    { "id": "agent", "type": "security", "label": "AI agent", "sublabel": "guardrails + evals", "pos": [670, 150], "size": [150, 64], "tag": "new" },
+    { "id": "tools", "type": "messagebus", "label": "Tools", "sublabel": "MCP / integrations", "pos": [880, 150], "size": [150, 64] },
+    { "id": "prod", "type": "frontend", "label": "Production", "sublabel": "tests + handover", "pos": [1090, 150], "size": [150, 64] }
+  ],
+  "connections": [
+    { "id": "backend-apis", "from": "backend", "to": "apis", "label": "exposes" },
+    { "id": "apis-data", "from": "apis", "to": "data", "label": "reads" },
+    { "id": "data-agent", "from": "data", "to": "agent", "label": "grounds", "variant": "emphasis" },
+    { "id": "agent-tools", "from": "agent", "to": "tools", "label": "calls", "variant": "emphasis" },
+    { "id": "tools-prod", "from": "tools", "to": "prod", "label": "ships", "variant": "emphasis" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "No rewrite", "items": ["The agent plugs into APIs and data you already run"] },
+    { "dot": "emerald", "title": "Production-safe", "items": ["Guardrails, tests and handover before launch"] }
+  ]
+}

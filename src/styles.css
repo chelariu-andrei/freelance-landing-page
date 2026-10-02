@@ -34,9 +34,15 @@
   .ac-notch::after { left: 100%; background: radial-gradient(circle at 100% 100%, transparent calc(var(--radius-xl) - 0.5px), var(--notch-bg, var(--cream)) var(--radius-xl)); }
 
   .ac-dashed-loop { border: 1.5px dashed var(--muted-on-dark); }
+
+  /* Hero terminal: a hard-stepped caret blink, and selection in the accent like the rest of the dark frame */
+  .ac-caret { animation: ac-caret 1.1s steps(1, end) infinite; }
+  @keyframes ac-caret { 50% { opacity: 0; } }
+  .ac-term { font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; } /* keep `--` and `...` literal */
+  .ac-term ::selection { background: var(--yellow); color: var(--ink); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ac-skeleton::after { animation: none; }
+  .ac-skeleton::after, .ac-caret { animation: none; }
   .ac-root *, .ac-root *::before, .ac-root *::after { transition-duration: 1ms !important; }
 }

@@ -18,11 +18,13 @@ export interface ProcessLoopProps {
 
 /** "Here's how we do it": white step cards with an ink StepPill + short description, joined by a dashed loop. */
 export function ProcessLoop({ title, steps, layout = "auto", loop = true, animated = true, className }: ProcessLoopProps) {
+  const three = steps.length === 3;
   const listCls = cx(
     "relative grid gap-4 m-0 p-0 list-none",
     layout === "vertical" && "grid-cols-1 max-w-[20rem] mx-auto",
-    layout === "horizontal" && "grid-cols-4",
-    layout === "auto" && "grid-cols-1 max-w-[20rem] mx-auto lg:max-w-none lg:grid-cols-4",
+    layout === "horizontal" && (three ? "grid-cols-3" : "grid-cols-4"),
+    layout === "auto" && "grid-cols-1 max-w-[20rem] mx-auto lg:max-w-none",
+    layout === "auto" && (three ? "lg:grid-cols-3" : "lg:grid-cols-4"),
   );
   const loopCls = cx(
     "absolute pointer-events-none border-0 border-dashed border-muted-on-dark rounded-lg",

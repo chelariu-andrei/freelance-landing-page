@@ -25,9 +25,9 @@ test("unset links never produce a placeholder href", () => {
 test("content shape matches the spec", () => {
   assert.deepEqual(content.nav.links.map((l) => l.href), ["/", "/about", "/expertise"]);
   assert.equal(content.nav.cta, "Book a call");
-  assert.equal(content.landing.services.length, 4);
-  assert.deepEqual(content.landing.services.map((s) => s.number), ["01", "02", "03", "04"]);
-  assert.equal(content.landing.stats.length, 3);
+  assert.equal(content.landing.services.length, 3);
+  assert.deepEqual(content.landing.services.map((s) => s.number), ["01", "02", "03"]);
+  assert.equal(content.landing.stats.length, 2);
   assert.equal(content.about.orbit.items.length, 8);
   assert.equal(content.about.matrix.modules.length, 3);
   assert.equal(content.site.pricingMode, "hidden");

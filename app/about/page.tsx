@@ -1,5 +1,6 @@
 import { AboutHero } from "@/site/about/AboutHero";
 import { Orbit } from "@/site/about/Orbit";
+import { Experience } from "@/site/about/Experience";
 import { Matrix } from "@/site/about/Matrix";
 import { StackCarousel } from "@/site/about/StackCarousel";
 import { Closing } from "@/site/about/Closing";
@@ -14,6 +15,7 @@ export default function AboutPage() {
       <main>
         <AboutHero />
         <Orbit />
+        <Experience />
         <Matrix />
         <StackCarousel />
         <Closing />
