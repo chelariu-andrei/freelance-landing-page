@@ -1,9 +1,12 @@
 # Ac. design system — source
 
-React 18 + TypeScript + Tailwind 3 + Framer Motion 11. Every Tailwind value maps to a CSS variable in `src/tokens/tokens.css`. There are no magic numbers in components.
+React 19 + TypeScript 7 + Tailwind 4 + Motion 14 (Next 16). Requires Node 24+. Every Tailwind value maps to a CSS variable in `src/tokens/tokens.css`. There are no magic numbers in components.
 
 ## Use in an app
-1. `import "./src/tokens/tokens.css"` and add `src/styles.css` to your Tailwind entry (it holds the @tailwind layers, focus ring, skeleton and notch helpers).
+1. `import "./src/tokens/tokens.css"` and add `src/styles.css` to your Tailwind entry. It is a Tailwind 4 entry (`@import` + `@config`, not `@tailwind` directives) and holds the focus ring, skeleton and notch helpers.
+   - Tailwind 4 is required. Pasting `src/styles.css` into a Tailwind 3 entry breaks on its `@import` and `@config` lines.
+   - The bundle CSS (`dist/bundle.css`) is wrapped in cascade layers (`@layer theme, components, utilities`) and uses `@property`. A host page's unlayered CSS beats Ac. utilities, so import it into your own layer order.
+   - It needs Tailwind 4's browser floor: Safari 16.4+, Chrome 111+, Firefox 128+.
 2. Extend your Tailwind config with `tailwind.config.js`, or use it as-is. Add your app's files to `content`.
 3. Load the fonts: `@fontsource-variable/urbanist` and `@fontsource-variable/inter`.
 4. Wrap the app in `<div className="ac-root">` and import components from `src/index.ts`.

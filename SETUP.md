@@ -4,7 +4,7 @@
 | Requirement | Status |
 |---|---|
 | TypeScript | ✅ already (`tsconfig.json`, strict) |
-| Tailwind CSS | ✅ already (v3, `tailwind.config.js`, `src/styles.css`) |
+| Tailwind CSS | ✅ already (v4, `@config "tailwind.config.js"` from `src/styles.css`) |
 | shadcn structure | ➕ added: `components.json`, the `@/*` → `src/*` path alias, `src/lib/utils.ts` (`cn`), `src/components/ui/` |
 
 Default paths are now: components go in `src/components/ui` (alias `@/components/ui`), utils in `src/lib/utils.ts` (`@/lib/utils`), and styles in `src/styles.css`.
@@ -27,5 +27,5 @@ npx shadcn@latest init          # creates components.json, lib/utils.ts, CSS var
 npm i three next-themes && npm i -D @types/three
 # copy src/components/ui/dotted-surface.tsx into src/components/ui/
 ```
-- **Vite + React:** `npm create vite@latest my-app -- --template react-ts`. Then add Tailwind (`npm i -D tailwindcss@3 postcss autoprefixer && npx tailwindcss init -p`), add `"baseUrl": "."` and `"paths": {"@/*": ["./src/*"]}` to tsconfig with the matching `resolve.alias` in `vite.config.ts`, and run `npx shadcn@latest init`.
+- **Vite + React:** `npm create vite@latest my-app -- --template react-ts`. Then add Tailwind (`npm i -D tailwindcss @tailwindcss/vite`), add `"paths": {"@/*": ["./src/*"]}` to tsconfig with the matching `resolve.alias` in `vite.config.ts`, and run `npx shadcn@latest init`.
 - **Dark mode:** in Next.js, wrap the app in `<ThemeProvider attribute="class">` from `next-themes` so the dots switch colour with the theme. Without the provider it stays in light mode.
