@@ -463,9 +463,9 @@ export const content = {
       ] as StackItem[],
     },
     closing: {
-      title: "Have a system that needs",
-      highlight: "AI without a rewrite?",
-      subtitle: "Tell me what runs today and what keeps slowing you down. I’ll tell you honestly what would help.",
+      title: "Looking for the",
+      highlight: "next challenge.",
+      subtitle: "If you have an interesting problem to solve, let’s talk.",
       primaryCta: "Book a call",
       secondaryCta: "LinkedIn",
     },

@@ -87,7 +87,7 @@ test("prices hidden while pricingMode is hidden", () => {
 
 test("about sections in order", () => {
   const html = page("about");
-  const order = ["for fun.", "get tools, not the keys.", "The work behind the promise.", "projects shipped to production", "Two disciplines, one engineer.", "Tools I ship with.", "AI without a rewrite?"];
+  const order = ["for fun.", "get tools, not the keys.", "The work behind the promise.", "projects shipped to production", "Two disciplines, one engineer.", "Tools I ship with.", "next challenge."];
   let at = 0;
   for (const s of order) {
     const i = html.indexOf(s, at);
@@ -103,9 +103,9 @@ test("experience figures render their final values in the static HTML", () => {
 
 test("closing section is in the static HTML (works without JS/WebGL)", () => {
   const html = page("about");
-  assert.match(html, /Have a system that needs/);
-  assert.match(html, /AI without a rewrite\?/);
-  const i = html.indexOf("AI without a rewrite?");
+  assert.match(html, /Looking for the/);
+  assert.match(html, /next challenge\./);
+  const i = html.indexOf("next challenge.");
   const slice = html.slice(i);
   assert.match(slice, />(?:<span[^>]*>)?Book a call</);
 });
