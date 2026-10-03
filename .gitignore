@@ -5,3 +5,6 @@ dist/
 *.tsbuildinfo
 /.playwright-mcp/
 test-results/
+# Written by next dev (Next 16 agent rules); kept local
+AGENTS.md
+CLAUDE.md
