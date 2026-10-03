@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 // Visual regression for the static export: build first, this serves out/ as Vercel would (clean URLs).
+// Baselines are rendered on Windows chromium; re-baseline (--update-snapshots) on Linux CI.
 export default defineConfig({
   testDir: "tests/visual",
   snapshotPathTemplate: "{testDir}/{testFileName}-snapshots/{arg}-{projectName}{ext}",

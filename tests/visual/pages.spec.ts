@@ -4,6 +4,8 @@ const PAGES = [["home", "/"], ["about", "/about"], ["privacy", "/privacy"], ["40
 
 for (const [name, path] of PAGES) {
   test(`${name} looks the same`, async ({ page }) => {
+    // ASSUMPTION: Motion's whileInView reads entry.isIntersecting from IntersectionObserver. If a later upgrade
+    // changes that, pages render hidden and every screenshot fails loudly (not a silent pass): revisit this stub.
     // Reveals use whileInView with once=false, so they hide again when scrolled out. Report every
     // observed element as fully visible so the full-page shot shows the final state deterministically.
     await page.addInitScript(() => {
