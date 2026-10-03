@@ -6,6 +6,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import { SITE_URL, jsonLd } from "@/site/seo";
+import { BookingDialog } from "@/site/booking/BookingDialog";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = { metadataBase: new URL(SITE_URL) };
 
@@ -22,7 +24,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd() }} />
-        <div className="ac-root">{children}</div>
+        <div className="ac-root">
+          {children}
+          <BookingDialog />
+        </div>
+        {/* Cookieless page-view counts; only reports when deployed on Vercel with Analytics enabled. */}
+        <Analytics />
       </body>
     </html>
   );

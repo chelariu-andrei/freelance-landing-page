@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 export const page = (name) => readFileSync(new URL(`../out/${name}.html`, import.meta.url), "utf8");
-const PAGES = ["index", "about", "expertise"];
+const PAGES = ["index", "about", "privacy"];
 
 test("every page is exported with lang=en and the Ac. root", () => {
   for (const p of PAGES) {
@@ -28,25 +28,33 @@ test("every page has exactly one h1, the main nav, and the footer", () => {
     assert.match(html, /<nav aria-label="Main"/, p);
     assert.match(html, /<footer/, p);
     assert.match(html, new RegExp(`© ${new Date().getFullYear()} Andrei Chelariu`), p);
-    assert.match(html, /This site uses no cookies and no tracking\./, p);
+    assert.match(html, /No cookies\. Privacy-friendly analytics\./, p);
+    assert.match(html, /href="\/privacy"/, p);
   }
 });
 
 test("current page link is marked aria-current", () => {
   assert.match(page("index"), /href="\/" aria-current="page"/);
   assert.match(page("about"), /href="\/about" aria-current="page"/);
-  assert.match(page("expertise"), /href="\/expertise" aria-current="page"/);
 });
 
 test("Book a call is pinned outside the mobile menu", () => {
-  const html = page("expertise");
+  const html = page("about");
   assert.match(html, /lg:hidden flex items-center gap-2"[^]*?>Book a call</);
 });
 
-test("expertise placeholder copy", () => {
-  const html = page("expertise");
-  assert.match(html, /Coming soon\./);
-  assert.match(html, /href="\/about"/);
+test("404 page: site chrome, joke headline, way home, never indexed", () => {
+  const html = page("404");
+  assert.equal(count(html, /<h1[\s>]/g), 1);
+  assert.match(html, /never shipped\./);
+  assert.match(html, /<nav aria-label="Main"/);
+  assert.match(html, /<footer/);
+  assert.match(html, /href="\/"[^>]*aria-label="Back to home"|aria-label="Back to home"[^>]*href="\/"/);
+  assert.match(html, /<meta name="robots" content="noindex/);
+});
+
+test("expertise page is gone", () => {
+  for (const p of PAGES) assert.doesNotMatch(page(p), /href="\/expertise"/, p);
 });
 
 test("landing sections in order: services, stats, contact", () => {
@@ -79,7 +87,7 @@ test("prices hidden while pricingMode is hidden", () => {
 
 test("about sections in order", () => {
   const html = page("about");
-  const order = ["survive production.", "years inside large Java systems", "The work behind the promise.", "projects shipped to production", "Two disciplines, one engineer.", "Tools I ship with.", "next challenge."];
+  const order = ["for fun.", "get tools, not the keys.", "The work behind the promise.", "projects shipped to production", "Two disciplines, one engineer.", "Tools I ship with.", "AI without a rewrite?"];
   let at = 0;
   for (const s of order) {
     const i = html.indexOf(s, at);
@@ -90,14 +98,14 @@ test("about sections in order", () => {
 
 test("experience figures render their final values in the static HTML", () => {
   const html = page("about");
-  for (const v of [">30+<", ">12<", ">25+<"]) assert.ok(html.includes(v), v);
+  for (const v of [">10<", ">30<", ">25+<"]) assert.ok(html.includes(v), v);
 });
 
 test("closing section is in the static HTML (works without JS/WebGL)", () => {
   const html = page("about");
-  assert.match(html, /Looking for the/);
-  assert.match(html, /next challenge\./);
-  const i = html.indexOf("next challenge.");
+  assert.match(html, /Have a system that needs/);
+  assert.match(html, /AI without a rewrite\?/);
+  const i = html.indexOf("AI without a rewrite?");
   const slice = html.slice(i);
   assert.match(slice, />(?:<span[^>]*>)?Book a call</);
 });
@@ -114,7 +122,7 @@ test("stack carousel lists tech, no client logos", () => {
 });
 
 test("per-page title, description, canonical and OG", () => {
-  const cases = [["index", "/", "AI automation, custom software"], ["about", "/about", "About · Andrei Chelariu"], ["expertise", "/expertise", "Expertise · Andrei Chelariu"]];
+  const cases = [["index", "/", "AI automation, custom software"], ["about", "/about", "About · Andrei Chelariu"], ["privacy", "/privacy", "Privacy · Andrei Chelariu"]];
   for (const [p, path, title] of cases) {
     const html = page(p);
     assert.match(html, new RegExp(`<title>[^<]*${title}`), p);
@@ -125,10 +133,8 @@ test("per-page title, description, canonical and OG", () => {
   }
 });
 
-test("expertise is noindex, the others are indexable", () => {
-  assert.match(page("expertise"), /<meta name="robots" content="noindex/);
-  assert.doesNotMatch(page("index"), /noindex/);
-  assert.doesNotMatch(page("about"), /noindex/);
+test("every page is indexable", () => {
+  for (const p of PAGES) assert.doesNotMatch(page(p), /noindex/, p);
 });
 
 test("JSON-LD Person + ProfessionalService", () => {
@@ -142,10 +148,25 @@ test("no page ships an unfilled placeholder in an href", () => {
   for (const p of PAGES) assert.doesNotMatch(page(p), /href="[^"]*\{\{/, p);
 });
 
-test("sitemap lists / and /about only; robots points to it", () => {
+test("sitemap lists /, /about and /privacy only; robots points to it", () => {
   const sitemap = readFileSync(new URL("../out/sitemap.xml", import.meta.url), "utf8");
-  assert.equal(count(sitemap, /<loc>/g), 2);
+  assert.equal(count(sitemap, /<loc>/g), 3);
+  assert.match(sitemap, /\/privacy<\/loc>/);
   assert.doesNotMatch(sitemap, /expertise/);
   const robots = readFileSync(new URL("../out/robots.txt", import.meta.url), "utf8");
   assert.match(robots, /Sitemap: https?:\/\/.+\/sitemap\.xml/);
+});
+
+test("privacy page covers booking data, Vercel Analytics, rights and contact", () => {
+  const html = page("privacy");
+  for (const s of ["Booking a call", "Google Calendar", "Vercel Web Analytics", "no cookies", "Your rights", "ANSPDCP", "Last updated"]) {
+    assert.ok(html.includes(s), s);
+  }
+  assert.match(html, /href="mailto:chelariu\.andrew@gmail\.com"/);
+});
+
+test("landing hero leads with the Java + AI niche", () => {
+  const html = page("index");
+  assert.match(html, /you already run\./);
+  assert.doesNotMatch(html, /restaurant-ai/);
 });

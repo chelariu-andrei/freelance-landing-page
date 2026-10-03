@@ -108,11 +108,13 @@ const wrap = (min: number, max: number, v: number) => {
   return ((((v - min) % r) + r) % r) + min;
 };
 
-function Tile({ item, clone, onItemClick }: { item: CarouselItem; clone: boolean; onItemClick?: (i: CarouselItem) => void }) {
+// forwardRef: AnimatePresence's popLayout mode measures each tile through a ref.
+const Tile = React.forwardRef<HTMLLIElement, { item: CarouselItem; clone: boolean; onItemClick?: (i: CarouselItem) => void }>(function Tile({ item, clone, onItemClick }, ref) {
   const Comp: any = item.href ? "a" : onItemClick ? "button" : "div";
   const interactive = !!(item.href || onItemClick);
   return (
     <motion.li
+      ref={ref}
       layout="position"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -158,7 +160,7 @@ function Tile({ item, clone, onItemClick }: { item: CarouselItem; clone: boolean
       </Comp>
     </motion.li>
   );
-}
+});
 
 function Arrow({ side, onClick }: { side: "left" | "right"; onClick: () => void }) {
   const Icon = side === "left" ? ChevronLeft : ChevronRight;

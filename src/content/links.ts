@@ -1,4 +1,5 @@
-export const CONTACT_FALLBACK = "/#contact";
+/** Opens the booking panel in the landing Contact section. */
+export const CONTACT_FALLBACK = "/#book";
 
 export const isPlaceholder = (v: string) => /^\{\{[A-Z0-9_]+\}\}$/.test(v.trim());
 

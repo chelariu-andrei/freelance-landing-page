@@ -57,6 +57,8 @@ export interface MatrixModuleContent {
 export interface ExperienceFigure { id: string; value: string; label: string; icon: IconKey }
 export interface StackItem { id: string; name: string; icon: IconKey; description: string }
 export interface Seo { title: string; description: string }
+/** One section of the privacy page; `email` adds the contact address under its paragraphs. */
+export interface PrivacySection { title: string; paragraphs: string[]; email?: boolean }
 
 const YEARS = "5+";
 const INDUSTRIES = "Retail";
@@ -70,6 +72,8 @@ export const content = {
     /** {{SITE_URL}}: replace, or set NEXT_PUBLIC_SITE_URL. Must be a valid absolute URL. */
     url: "https://example.com",
     calLink: "{{CAL_LINK}}",
+    /** {{BOOKING_URL}}: the Google Apps Script web app URL (integrations/google-calendar/README.md), or set NEXT_PUBLIC_BOOKING_URL. */
+    bookingUrl: "{{BOOKING_URL}}",
     email: "chelariu.andrew@gmail.com",
     linkedin: social.linkedin,
     github: social.github,
@@ -86,7 +90,6 @@ export const content = {
     links: [
       { label: "Home", href: "/" },
       { label: "About", href: "/about" },
-      { label: "Expertise", href: "/expertise" },
     ] as NavLink[],
     cta: "Book a call",
   },
@@ -98,7 +101,8 @@ export const content = {
     githubLabel: "GitHub",
     emailLabel: "Email",
     europassLabel: "Europass CV",
-    privacy: "This site uses no cookies and no tracking.",
+    privacy: "No cookies. Privacy-friendly analytics.",
+    privacyLink: { label: "Privacy", href: "/privacy" } as NavLink,
   },
   seo: {
     landing: {
@@ -107,34 +111,53 @@ export const content = {
     } as Seo,
     about: {
       title: "About · Andrei Chelariu",
-      description: "Senior backend engineer with an enterprise Java background, now focused on applying AI to existing systems safely.",
+      description: `Backend engineer with ${YEARS} years on large enterprise systems in retail, now also building AI agents that work with existing systems.`,
     } as Seo,
-    expertise: {
-      title: "Expertise · Andrei Chelariu",
-      description: "A detailed breakdown of capabilities is coming soon.",
+    privacy: {
+      title: "Privacy · Andrei Chelariu",
+      description: "What personal data this site collects, why, where it goes and how to have it deleted.",
     } as Seo,
+    notFound: {
+      title: "Page not found · Andrei Chelariu",
+      description: "This address doesn't exist on the site.",
+    } as Seo,
+  },
+  notFound: {
+    lines: [{ text: "404." }, { text: "This page" }, { highlight: "never shipped." }],
+    subtitle: "Old link, or someone typed fast. Either way, nothing is on fire. The pages that did ship are one click away.",
+    primaryCta: "Back to home",
+    primaryCtaHover: "Take me home",
+    secondaryCta: "Or book a call",
+    terminal: {
+      path: "~/site",
+      /** The visitor's own path is appended at runtime. */
+      command: "http GET",
+      steps: ["Looking up the route...", "Checked /: exists", "Checked /about: exists", "Grepped the logs: no trace of it"],
+      done: "404. No stack trace, just a typo.",
+      ariaLabel: "A request for this address is checked against the site's pages, Home and About, finds no match and returns 404 Not Found.",
+    },
   },
   landing: {
     hero: {
-      lines: [{ text: "Software that scales." }, { text: "AI that ships." }, { highlight: "Systems that last." }],
-      subtitle: "I'm Andrei, a freelance senior engineer. I automate workflows, build custom software, and modernize legacy systems without a rewrite.",
+      lines: [{ text: "AI agents for" }, { text: "the Java systems" }, { highlight: "you already run." }],
+      subtitle: "I'm Andrei, a freelance senior engineer. I add AI automation to existing Java and Spring systems, build custom software, and modernize legacy code without a rewrite.",
       trust: `${YEARS} years in enterprise Java · Production systems in ${INDUSTRIES.toLowerCase()}`,
       primaryCta: "Book a 30-min call",
       primaryCtaHover: "Pick a time",
       secondaryCta: { label: "View services", href: "#services" },
       terminal: {
         path: "~/projects",
-        command: "architect --project restaurant-ai",
+        command: "ship --project invoice-agent",
         steps: [
-          "Analyzing requirements...",
-          "Designing architecture...",
-          "Building APIs...",
-          "Integrating AI workflows...",
-          "Running tests...",
-          "Deploying to production...",
+          "Mapping the invoice workflow...",
+          "Exposing ERP endpoints as typed tools...",
+          "Wiring Spring AI into billing-service...",
+          "Running evals on past invoices...",
+          "Shadow-testing next to production...",
+          "Rolling out behind a feature flag...",
         ],
-        done: "Hello, world!",
-        ariaLabel: "A project going from requirements through architecture, APIs, AI workflows and tests to a production deployment that answers: Hello, world",
+        done: "Shipped. Production didn't notice.",
+        ariaLabel: "An AI invoice agent added to an existing Java system: the workflow is mapped, ERP endpoints become typed tools, Spring AI is wired in, evals run on past invoices, it is shadow-tested next to production and rolled out behind a feature flag",
       },
     },
     servicesOverview: {
@@ -248,16 +271,123 @@ export const content = {
       cta: "Book a discovery call",
       ctaHover: "30 min, no pitch",
     },
+    booking: {
+      stepOf: (n: number, total: number) => `Step ${n} of ${total}`,
+      steps: {
+        date: "Pick a day.",
+        time: "Pick a time.",
+        you: "Who should I expect?",
+        phone: "A number, just in case. (optional)",
+        interest: "What do you want to talk about?",
+        review: "All good?",
+      },
+      loading: "Checking my calendar…",
+      noTimes: "No free times on this day. Pick another one.",
+      timeZoneNote: (tz: string) => `Times are in your time zone (${tz}). Each call is 30 minutes.`,
+      fields: {
+        name: "Your name",
+        email: "Email",
+        emailHint: "The calendar invite goes here.",
+        phone: "Phone",
+        phoneHint: "Optional. Only used if the video link fails.",
+        note: "Anything I should know before the call? (optional)",
+      },
+      interests: ["AI Automation", "Custom Software", "Legacy Modernization", "Not sure yet"],
+      review: { when: "When", who: "Who", phone: "Phone", topic: "Topic", edit: "Edit", noPhone: "Not given" },
+      consent: { before: "By booking you agree to the processing described in the ", link: "privacy policy", after: "." },
+      back: "Back",
+      next: "Continue",
+      confirm: "Confirm booking",
+      sending: "Booking…",
+      errors: {
+        name: "Tell me your name.",
+        email: "That email doesn't look right.",
+        phone: "That number doesn't look right.",
+        interest: "Pick one. \"Not sure yet\" is fine.",
+        slot_taken: "Someone just took that slot. Pick another time.",
+        invalid: "Something in the form didn't check out. Have another look.",
+        rate_limited: "You've already booked a call today. Email me if you need another one.",
+        server: "Booking failed on my side. Try again, or email me.",
+        network: "Couldn't reach the calendar. Check your connection and try again.",
+        not_configured: "Online booking isn't connected yet. Email me and I'll send you a time.",
+      },
+      emailMe: "Email me instead",
+      done: {
+        title: "You're booked.",
+        text: (email: string) => `The calendar invite with the video link is on its way to ${email}.`,
+        again: "Book another time",
+      },
+    },
+  },
+  privacy: {
+    hero: {
+      lines: [{ text: "Your data," }, { highlight: "kept small." }],
+      subtitle: "What this site collects, why, where it goes and how to have it deleted. No cookies, no ad trackers, no data sold.",
+    },
+    updatedLabel: "Last updated",
+    updated: "3 October 2026",
+    sections: [
+      {
+        title: "Who is responsible",
+        paragraphs: [
+          "Andrei Chelariu, freelance software engineer based in Romania, is the controller for the personal data described here.",
+          "Questions or requests about your data: write to the email address below.",
+        ],
+        email: true,
+      },
+      {
+        title: "Booking a call",
+        paragraphs: [
+          "When you book a call I collect your name, email address, the topic you pick, any note you add and, if you choose to give it, a phone number. I use them only to schedule and hold the call and to follow up on it.",
+          "Legal basis: steps taken at your request before a possible contract (Art. 6(1)(b) GDPR).",
+          "The booking is stored as an event in my Google Calendar and I receive a copy by email (Google, as processor). Google may process data outside the EU under the EU-US Data Privacy Framework and Standard Contractual Clauses.",
+          "If we don't start working together, I delete the booking details within 12 months of the call.",
+        ],
+      },
+      {
+        title: "Analytics",
+        paragraphs: [
+          "I use Vercel Web Analytics to see which pages are visited. It sets no cookies and stores no persistent identifier; visits are counted from a hash that changes daily and is never linked back to you.",
+          "It records the page, the referring site, country, browser, operating system and device type, in aggregate only.",
+          "Legal basis: my legitimate interest in knowing whether the site is useful (Art. 6(1)(f) GDPR).",
+        ],
+      },
+      {
+        title: "Hosting",
+        paragraphs: [
+          "The site is hosted by Vercel. Like any web server, it briefly processes your IP address and request details to deliver pages and protect against abuse. Vercel acts as processor.",
+        ],
+      },
+      {
+        title: "Email",
+        paragraphs: [
+          "If you email me directly, I keep the conversation for as long as it is relevant to our contact or a project, and delete it on request when nothing obliges me to keep it.",
+        ],
+      },
+      {
+        title: "Cookies",
+        paragraphs: [
+          "This site sets no cookies and uses no local tracking, so there is no cookie banner.",
+        ],
+      },
+      {
+        title: "Your rights",
+        paragraphs: [
+          "You can ask to access, correct, delete or export your data, to restrict its processing, or object to it. Send me an email and I'll answer within 30 days.",
+          "You can also complain to the Romanian data protection authority (ANSPDCP, dataprotection.ro) or the authority in your country.",
+        ],
+      },
+    ] as PrivacySection[],
   },
   about: {
     hero: {
-      lines: [{ text: "Senior backend engineer." }, { text: "Making AI" }, { highlight: "survive production." }],
-      subtitle: "Enterprise Java background, large-scale systems. Now focused on applying AI to existing systems, safely.",
+      lines: [{ text: "Backend engineer." }, { text: "I read stack traces" }, { highlight: "for fun." }],
+      subtitle: `${YEARS} years on large enterprise backends in retail. Lately I also build AI agents that work with existing systems and get tested like the rest of the code.`,
       cvCta: "Europass CV",
       cvCtaHover: "Open my CV",
     },
     orbit: {
-      statement: `${YEARS} years inside large Java systems. Now I add AI to them, safely.`,
+      statement: "My AI agents get tools, not the keys. Guardrails and a sandbox decide what they touch.",
       monogram: "AC",
       photoAlt: "Andrei Chelariu",
       items: [
@@ -271,50 +401,40 @@ export const content = {
         { id: "springai", label: "Spring AI", icon: "springai", x: 74, y: 88, size: 15 },
       ] as OrbitEntry[],
     },
-    // ILLUSTRATIVE — replace with real numbers before launch (scripts/check-placeholders.mjs warns while this marker is here).
     experience: {
       title: "The work behind the promise.",
       subtitle: "Numbers from production systems, not side projects.",
-      featured: { id: "projects", value: "30+", label: "projects shipped to production", icon: "shipped" } as ExperienceFigure,
+      featured: { id: "projects", value: "10", label: "projects shipped to production", icon: "shipped" } as ExperienceFigure,
       figures: [
         { id: "years", value: YEARS, label: "years of enterprise Java", icon: "years" },
-        { id: "mentored", value: "12", label: "engineers mentored", icon: "mentor" },
+        { id: "mentored", value: "30", label: "engineers mentored", icon: "mentor" },
         { id: "tech", value: "25+", label: "technologies used in production", icon: "stack" },
       ] as ExperienceFigure[],
     },
     matrix: {
       title: "Two disciplines, one engineer.",
-      meta: "Capability · what it means for you",
+      meta: "Skill · how I use it",
       modules: [
         {
-          id: "ai", name: "AI Automation / Agentic Engineering", tagline: "AI that works inside your systems", icon: "agents", iconTone: "periwinkle",
+          id: "ai", name: "AI Automation / Agentic Engineering", tagline: "What I build now", icon: "agents", iconTone: "periwinkle",
           features: [
-            { lead: "Agents & chatbots", text: "that call your real APIs, not a demo sandbox" },
-            { lead: "RAG", text: "answers grounded in your own documents and data" },
-            { lead: "Integrations & MCP/tools", text: "AI connected to the systems your team already uses" },
-            { lead: "Workflow automation", text: "manual steps removed, with a human in the loop where it matters" },
-            { lead: "Spring AI / LangChain4j", text: "AI built in Java, in the codebase you already maintain" },
-            { lead: "Guardrails & evaluation", text: "you know when the model is wrong before your users do" },
+            { lead: "Agents & chatbots", text: "I build agents that call real APIs through typed tools and act on the result" },
+            { lead: "MCP & tool calling", text: "I expose existing services as tools an agent can use, with the minimum permissions it needs" },
+            { lead: "RAG", text: "retrieval over internal documents, with the source attached to every answer" },
+            { lead: "Workflow automation", text: "multi-step processes in code, or in n8n and Make when that is enough" },
+            { lead: "Spring AI / LangChain4j", text: "my default for putting LLMs inside Java services" },
+            { lead: "Guardrails, sandbox & evals", text: "schema-checked output, sandboxed execution and an eval set of real cases before anything ships" },
           ],
         },
         {
-          id: "software", name: "Custom Software Engineering", tagline: "The backend underneath", icon: "code", iconTone: "yellow",
+          id: "software", name: "Custom Software Engineering", tagline: "What I've done for years", icon: "code", iconTone: "yellow",
           features: [
-            { lead: "Java / Spring / Quarkus", text: "changes that respect how your system already works" },
-            { lead: "PostgreSQL / MongoDB", text: "data models that hold up under real load" },
-            { lead: "React", text: "internal UIs your team can use without training" },
-            { lead: "APIs / microservices", text: "clean seams to plug new features into" },
-            { lead: "GCP · Terraform / Kubernetes", text: "reproducible deployments you can run yourself" },
-            { lead: "Full SDLC", text: "from design to production and support" },
-          ],
-        },
-        {
-          id: "process", name: "How I work", tagline: "Discover → Audit → Prototype → Ship → Support", icon: "process", iconTone: "mint",
-          features: [
-            { lead: "Small first step", text: "a fixed-scope start before any big commitment" },
-            { lead: "Fixed scope", text: "you know what you get and when" },
-            { lead: "Production-minded", text: "tests, monitoring and rollback plans from day one" },
-            { lead: "Handover", text: "docs and code your team can own after I leave" },
+            { lead: "Java / Spring / Quarkus", text: "my core stack, on large enterprise systems in retail" },
+            { lead: "PostgreSQL / Oracle / MongoDB", text: "schema design, migrations and queries that hold up under load" },
+            { lead: "APIs & microservices", text: "contract-first APIs and service boundaries that stay easy to change" },
+            { lead: "React / Next.js", text: "the frontend when a project needs one, usually internal tools" },
+            { lead: "GCP · Terraform / Docker / Kubernetes", text: "infrastructure as code, containers and deployments" },
+            { lead: "Full SDLC", text: "from design to production, and support after release" },
           ],
         },
       ] as MatrixModuleContent[],
@@ -322,7 +442,7 @@ export const content = {
     stack: {
       eyebrow: "Stack",
       title: "Tools I ship with.",
-      titleMuted: "Chosen for production, not for demos.",
+      titleMuted: "And would ship with again.",
       items: [
         { id: "java", name: "Java", icon: "java", description: "Core language" },
         { id: "spring", name: "Spring Boot", icon: "spring", description: "Services and APIs" },
@@ -343,18 +463,11 @@ export const content = {
       ] as StackItem[],
     },
     closing: {
-      title: "Looking for the",
-      highlight: "next challenge.",
-      subtitle: "If you have an interesting problem to solve, let’s talk.",
+      title: "Have a system that needs",
+      highlight: "AI without a rewrite?",
+      subtitle: "Tell me what runs today and what keeps slowing you down. I’ll tell you honestly what would help.",
       primaryCta: "Book a call",
       secondaryCta: "LinkedIn",
-    },
-  },
-  expertise: {
-    hero: {
-      lines: [{ text: "Expertise." }, { highlight: "Coming soon." }],
-      subtitle: "A deeper breakdown of capabilities is on the way. Meanwhile, see About.",
-      primaryCta: { label: "About me", href: "/about" },
     },
   },
 };

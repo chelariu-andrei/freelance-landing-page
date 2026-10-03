@@ -19,6 +19,16 @@
   /* Focus ring: 2px solid, offset 3px. Ink on light grounds, yellow on dark (.ac-dark) — both ≥3:1. */
   .ac-focus:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   .ac-dark .ac-focus:focus-visible, .ac-focus.ac-on-dark:focus-visible { outline-color: var(--focus-on-dark); }
+  /* A light panel inside a dark section (the booking panel) goes back to the ink ring. */
+  .ac-dark .ac-light .ac-focus:focus-visible { outline-color: var(--focus); }
+
+  /* Booking popup: ink veil over the page, panel rises in. */
+  .ac-booking::backdrop { background: color-mix(in srgb, var(--ink) 72%, transparent); }
+  .ac-booking[open] { animation: ac-booking-in var(--dur-slow) var(--ease-out); }
+  .ac-booking[open]::backdrop { animation: ac-fade-in var(--dur-base) var(--ease-out); }
+  @keyframes ac-booking-in { from { opacity: 0; transform: translateY(24px) scale(0.98); } }
+  @keyframes ac-fade-in { from { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .ac-booking[open], .ac-booking[open]::backdrop { animation: none; } }
 
   /* Loading skeleton */
   .ac-skeleton { background: var(--stone); border-radius: var(--radius-sm); position: relative; overflow: hidden; }
@@ -45,4 +55,23 @@
 @media (prefers-reduced-motion: reduce) {
   .ac-skeleton::after, .ac-caret { animation: none; }
   .ac-root *, .ac-root *::before, .ac-root *::after { transition-duration: 1ms !important; }
+}
+
+/* OrbitStatement discs: centre at (x, y), diameter s — all in % of the stage width, y in % of its height.
+   Negative margins centre the disc without a transform, which framer-motion owns. Phones read --m*. */
+.ac-orbit-node {
+  position: absolute;
+  aspect-ratio: 1;
+  left: var(--mx);
+  top: var(--my);
+  width: var(--ms);
+  margin: calc(var(--ms) / -2) 0 0 calc(var(--ms) / -2);
+}
+@media (min-width: 640px) {
+  .ac-orbit-node {
+    left: var(--x);
+    top: var(--y);
+    width: var(--s);
+    margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  }
 }

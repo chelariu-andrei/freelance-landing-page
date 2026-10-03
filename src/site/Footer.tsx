@@ -21,7 +21,7 @@ export function Footer({ year }: FooterProps) {
     <SiteFooter
       tagline={footer.tagline}
       ctas={[{ label: nav.cta, href: resolveHref(site.calLink) }]}
-      columns={[{ title: footer.pagesTitle, links: nav.links }]}
+      columns={[{ title: footer.pagesTitle, links: [...nav.links, footer.privacyLink] }]}
       socials={socials}
       socialsTitle={footer.connectTitle}
       copyright={`© ${year} ${site.name} · ${footer.privacy}`}

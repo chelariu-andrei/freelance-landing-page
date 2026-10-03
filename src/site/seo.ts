@@ -4,15 +4,16 @@ import { isSet } from "@/content/links";
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || content.site.url).replace(/\/$/, "");
 
-export function pageMetadata(key: "landing" | "about" | "expertise", path: string): Metadata {
+export function pageMetadata(key: "landing" | "about" | "privacy" | "notFound", path: string): Metadata {
   const { title, description } = content.seo[key];
+  // The 404 page is served for every unknown address: no canonical, never indexed.
+  if (key === "notFound") return { title, description, robots: { index: false, follow: true } };
   return {
     title,
     description,
     alternates: { canonical: path },
     openGraph: { title, description, url: path, siteName: content.site.name, type: "website", locale: "en" },
     twitter: { card: "summary", title, description },
-    ...(key === "expertise" ? { robots: { index: false, follow: true } } : {}),
   };
 }
 

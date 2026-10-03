@@ -16,11 +16,11 @@ Personal site of Andrei Chelariu, a freelance senior backend engineer (AI-powere
 Adds AI agents and automation to existing Java/Spring systems without a rewrite and without breaking production: one engineer with enterprise Java depth (5+ years, retail), working in small, fixed-scope steps with guardrails, tests and handover.
 
 ## Operating Context
-Three fixed-scope services sharing one path (discover, build, test and launch): AI Automation, Custom Software, Legacy Modernization. Booking happens through a Cal.com link (`calLink`, still a placeholder); contact also by email, LinkedIn, GitHub and a Europass CV served from /public.
+Three fixed-scope services sharing one path (discover, build, test and launch): AI Automation, Custom Software, Legacy Modernization. Booking happens in a site-wide step-by-step popup (day, time, name and email, phone, topic, review), backed by a Google Apps Script that reads and writes Google Calendar (`integrations/google-calendar/`, `bookingUrl`); every "Book a call" link (`/#book`) opens it in place, on any page; contact also by email, LinkedIn, GitHub and a Europass CV served from /public.
 
 ## Capabilities and Constraints
-- Pages: Home (hero, services, stats, contact), About, Expertise (placeholder, "coming soon").
-- Static-first Next.js 14 + Tailwind + framer-motion; no cookies, no tracking.
+- Pages: Home (hero, services, stats, contact), About, Privacy (GDPR: booking data, analytics, hosting, rights), and a 404 page for unknown addresses.
+- Static-first Next.js 14 + Tailwind + framer-motion; no cookies. Cookieless Vercel Web Analytics (aggregate page views), disclosed on /privacy.
 - Pricing hidden by default (`pricingMode`), `from` mode available; price values are placeholders.
 - Open placeholders: `SITE_URL`, `CAL_LINK`, service prices.
 - Site language is English; the owner converses in Romanian.
@@ -29,7 +29,7 @@ Three fixed-scope services sharing one path (discover, build, test and launch): 
 Tone: senior, direct, technical, calm, outcome-oriented. Engineer talking to an engineer who controls a budget. No hype, no "revolutionize", no "cutting-edge", no buzzword soup. Name: Andrei Chelariu.
 
 ## Evidence on Hand
-Europass CV (`/EUROPASS_CV.pdf`). The owner has real figures for experience, but the About numbers currently in `content.ts` (30+ projects, 12 engineers mentored, 25+ technologies) are illustrative and flagged by `scripts/check-placeholders.mjs` until replaced; the real values are not yet supplied. No public client names, logos, case studies or testimonials exist; none may be invented. Slots for GitHub demos, architecture diagrams and short videos are planned but empty.
+Europass CV (`/EUROPASS_CV.pdf`). The About experience figures in `content.ts` (10 projects, 30 engineers mentored, 25+ technologies) are real, confirmed by the owner. No public client names, logos, case studies or testimonials exist; none may be invented. Slots for GitHub demos, architecture diagrams and short videos are planned but empty.
 
 ## Product Principles
 1. Start a conversation: every surface leads toward booking a call.

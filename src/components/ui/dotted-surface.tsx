@@ -123,7 +123,8 @@ export function DottedSurface({
     const material = new THREE.PointsMaterial({
       size,
       vertexColors,
-      color: vertexColors ? undefined : dot,
+      // Only set when needed: THREE warns about an explicit undefined.
+      ...(vertexColors ? {} : { color: dot }),
       transparent: true,
       opacity,
       sizeAttenuation,
