@@ -223,11 +223,17 @@ export function LogoCarousel({
   const drifting = autoplay && !reduce;
 
   const raw = useMotionValue(0);
+  // The transform reads the width from a ref so the motion value stays stable. The ref is written in a layout
+  // effect, not during render, so the React Compiler can optimise this component. Nothing reads it before then:
+  // the transform only recomputes on a raw change (scheduled after commit) or in the layout effect below.
   const setWRef = React.useRef(0);
-  setWRef.current = setW;
   const x = useTransform(raw, (v) => (setWRef.current > 0 ? wrap(-setWRef.current, 0, v) : 0));
-  // Re-wrap immediately when the measured width changes (breakpoint, items added).
-  React.useEffect(() => { raw.set(raw.get()); }, [setW, raw]);
+  // Re-wrap before paint whenever the measured width changes (breakpoint, items added). raw.set(raw.get()) would
+  // be a no-op (motion skips unchanged values), so write the wrapped value to x directly.
+  React.useLayoutEffect(() => {
+    setWRef.current = setW;
+    x.set(setW > 0 ? wrap(-setW, 0, raw.get()) : 0);
+  }, [setW, raw, x]);
 
   // Measure one set + one step whenever items, sizing or the viewport change (breakpoints included).
   React.useLayoutEffect(() => {
