@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { ArrowLeft, Check } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/primitives/Button";

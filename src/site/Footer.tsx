@@ -1,5 +1,6 @@
 "use client";
-import { Linkedin, Github, Mail, FileUser } from "lucide-react";
+import { Mail, FileUser } from "lucide-react";
+import { Linkedin, Github } from "@/site/brand-icons";
 import { SiteFooter } from "@/layout/SiteFooter";
 import { content } from "@/content/content";
 import { isSet, mailtoHref, resolveHref } from "@/content/links";

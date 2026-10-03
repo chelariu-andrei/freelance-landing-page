@@ -1,5 +1,5 @@
 import * as React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { cx } from "../lib/cx";
 import { usePressMotion } from "../motion/Reveal";
 
@@ -52,13 +52,13 @@ export function Button({
   const inner = (<>{iconLeft}{children != null && <span>{children}</span>}{iconRight}</>);
   if (href) {
     return (
-      <motion.a ref={ref as any} href={disabled ? undefined : href} aria-disabled={disabled || undefined} className={cls} {...press} {...(rest as any)}>
+      <motion.a ref={ref} href={disabled ? undefined : href} aria-disabled={disabled || undefined} className={cls} {...press} {...(rest as any)}>
         {inner}
       </motion.a>
     );
   }
   return (
-    <motion.button ref={ref as any} type="button" disabled={disabled} className={cls} {...press} {...(rest as any)}>
+    <motion.button ref={ref} type="button" disabled={disabled} className={cls} {...press} {...(rest as any)}>
       {inner}
     </motion.button>
   );

@@ -1,6 +1,6 @@
 "use client";
 import { ArrowDown, ArrowRight, ArrowUp } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { Stagger, StaggerItem } from "@/motion/Reveal";
 import { stagger } from "@/tokens/motion";
 

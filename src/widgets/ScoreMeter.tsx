@@ -1,5 +1,5 @@
 import * as React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { cx } from "../lib/cx";
 import { duration as D, ease as E } from "../tokens/motion";
 

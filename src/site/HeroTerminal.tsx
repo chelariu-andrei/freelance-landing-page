@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
 
 export interface HeroTerminalProps {
   /** Working directory shown in the title bar. */

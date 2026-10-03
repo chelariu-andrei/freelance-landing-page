@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import dynamic from "next/dynamic";
-import { animate, useInView, useReducedMotion } from "framer-motion";
+import { animate, useInView, useReducedMotion } from "motion/react";
 import { SectionHeading } from "@/primitives/SectionHeading";
 import { IconCircle } from "@/primitives/Icon";
 import { Stagger, StaggerItem } from "@/motion/Reveal";

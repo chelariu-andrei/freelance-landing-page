@@ -1,5 +1,5 @@
 import * as React from "react";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { duration as D, ease as E, distance as DIST, stagger as S } from "../tokens/motion";
 
 export type RevealVariant = "fade" | "up" | "down" | "left" | "right" | "scale";

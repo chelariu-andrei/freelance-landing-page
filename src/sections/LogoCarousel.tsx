@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   AnimatePresence, animate, motion, useAnimationFrame, useInView, useMotionValue, useReducedMotion,
   useScroll, useTransform, useVelocity, type PanInfo,
-} from "framer-motion";
+} from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cx } from "../lib/cx";
 import { Reveal } from "../motion/Reveal";

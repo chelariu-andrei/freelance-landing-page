@@ -58,7 +58,7 @@
 }
 
 /* OrbitStatement discs: centre at (x, y), diameter s — all in % of the stage width, y in % of its height.
-   Negative margins centre the disc without a transform, which framer-motion owns. Phones read --m*. */
+   Negative margins centre the disc without a transform, which Motion owns. Phones read --m*. */
 .ac-orbit-node {
   position: absolute;
   aspect-ratio: 1;

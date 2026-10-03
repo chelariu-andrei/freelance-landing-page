@@ -1,6 +1,6 @@
 "use client";
 import { ArrowDown, Sun } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { StepPill } from "@/primitives/StepPill";
 import { Reveal, Stagger, StaggerItem } from "@/motion/Reveal";
 import { iconFor } from "@/site/icons";

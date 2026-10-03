@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { ArrowDown, Check, Mail, X } from "lucide-react";
-import { useInView, useReducedMotion } from "framer-motion";
+import { useInView, useReducedMotion } from "motion/react";
 import { Card } from "@/primitives/Card";
 import type { ServiceVisual } from "@/content/content";
 
@@ -14,7 +14,7 @@ import type { ServiceVisual } from "@/content/content";
 
 function usePlayhead(ref: React.RefObject<HTMLDivElement | null>, end: number, stepMs: (k: number) => number, holdMs: number) {
   const reduce = useReducedMotion();
-  const inView = useInView(ref as React.RefObject<Element>, { amount: 0.45 }) /* framer-motion 11 typings predate React 19 nullable refs */;
+  const inView = useInView(ref, { amount: 0.45 });
   const [tick, setTick] = React.useState(end);
   const [cycle, setCycle] = React.useState(0);
   React.useEffect(() => {

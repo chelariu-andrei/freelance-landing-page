@@ -32,8 +32,9 @@ export { LogoCarousel, carouselPresets } from "./sections/LogoCarousel";
 export { Reveal, Stagger, StaggerItem, usePressMotion } from "./motion/Reveal";
 export { motionTokens } from "./tokens/motion";
 // Icon set used by the previews (lucide-react, ISC). Consumers can import lucide-react directly instead.
-import { Lightbulb, Palette, Pipette, Rocket, Clock, CornerRightDown, ArrowUpRight, ChevronRight, Menu, X, Linkedin, Instagram, Search, Music2, MessageCircle, Home, Users, Sparkles, Waves, HeartPulse, Mail, Building2, MapPin, KeyRound, PenTool, Code2, Database, Triangle, Bot, Aperture, BarChart3, CalendarDays, Camera, FileSignature, Plus, Gift, Workflow, ChartSpline, Megaphone, Handshake, ThumbsUp, KeySquare } from "lucide-react";
-export const icons = { Lightbulb, Palette, Pipette, Rocket, Clock, CornerRightDown, ArrowUpRight, ChevronRight, Menu, X, Linkedin, Instagram, Search, Music2, MessageCircle, Home, Users, Sparkles, Waves, HeartPulse, Mail, Building2, MapPin, KeyRound, PenTool, Code2, Database, Triangle, Bot, Aperture, BarChart3, CalendarDays, Camera, FileSignature, Plus, Gift, Workflow, ChartSpline, Megaphone, Handshake, ThumbsUp, KeySquare };
+import { Lightbulb, Palette, Pipette, Rocket, Clock, CornerRightDown, ArrowUpRight, ChevronRight, Menu, X, Search, Music2, MessageCircle, Home, Users, Sparkles, Waves, HeartPulse, Mail, Building2, MapPin, KeyRound, PenTool, Code2, Database, Triangle, Bot, Aperture, BarChart3, CalendarDays, Camera, FileSignature, Plus, Gift, Workflow, ChartSpline, Megaphone, Handshake, ThumbsUp, KeySquare } from "lucide-react";
+import { Linkedin, Instagram } from "./site/brand-icons";
+export const icons = { Lightbulb, Palette, Pipette, Rocket, Clock, CornerRightDown, ArrowUpRight, ChevronRight, Menu, X, Search, Music2, MessageCircle, Home, Users, Sparkles, Waves, HeartPulse, Mail, Building2, MapPin, KeyRound, PenTool, Code2, Database, Triangle, Bot, Aperture, BarChart3, CalendarDays, Camera, FileSignature, Plus, Gift, Workflow, ChartSpline, Megaphone, Handshake, ThumbsUp, KeySquare };
 
 export { DottedSurface } from "./components/ui/dotted-surface";
 export { DottedSurfaceSection } from "./sections/DottedSurfaceSection";
