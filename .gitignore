@@ -4,3 +4,4 @@ out/
 dist/
 *.tsbuildinfo
 /.playwright-mcp/
+test-results/

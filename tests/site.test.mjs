@@ -165,10 +165,11 @@ test("privacy page covers booking data, Vercel Analytics, rights and contact", (
   assert.match(html, /href="mailto:chelariu\.andrew@gmail\.com"/);
 });
 
-test("landing hero leads with the Java + AI niche", () => {
+test("landing hero keeps the scales / ships / lasts headline", () => {
   const html = page("index");
-  assert.match(html, /you already run\./);
-  assert.doesNotMatch(html, /restaurant-ai/);
+  assert.match(html, /Software that scales\./);
+  assert.match(html, /Systems that last\./);
+  assert.match(html, /restaurant-ai/);
 });
 
 test("footer social icons render (lucide v1 dropped brand icons)", () => {
