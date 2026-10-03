@@ -41,7 +41,7 @@ export function PromoBanner({ highlight, children, icon, href, tone = "ink", onD
         className={cx("flex flex-wrap items-center justify-center gap-x-4 gap-y-1 px-12 py-5 lg:py-6 text-center no-underline text-current font-body", href && "ac-focus group")}
       >
         {icon && <span className={cx("inline-flex shrink-0", ink ? "text-white" : "text-ink")} aria-hidden>{icon}</span>}
-        <strong className={cx("font-semibold text-button-lg lg:text-heading-lg lg:leading-tight tracking-[-0.01em]", ink ? "text-yellow" : "text-ink")}>{highlight}</strong>
+        <strong className={cx("font-semibold text-button-lg lg:text-heading-lg lg:leading-tight max-lg:tracking-[-0.01em]", ink ? "text-yellow" : "text-ink")}>{highlight}</strong>
         {children && <span className="text-button-lg lg:text-[1.875rem] lg:leading-tight">{children}</span>}
       </Comp>
       {onDismiss && (

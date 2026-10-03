@@ -1,6 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind 4 without preflight (we never used it): theme variables + utilities only, tokens from the JS config. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@config "../tailwind.config.js";
+
+/* v4 ships a built-in `max-w-prose` (65ch) that wins over the config's `maxWidth.prose`, even via @utility.
+   Restate the token here, after the generated utilities, so `max-w-prose` stays 44rem. */
+@layer utilities {
+  .max-w-prose { max-width: 44rem; }
+}
 
 /* Motion tokens as CSS variables (tokens.json carries no motion family) */
 :root {
@@ -50,28 +58,28 @@
   @keyframes ac-caret { 50% { opacity: 0; } }
   .ac-term { font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; } /* keep `--` and `...` literal */
   .ac-term ::selection { background: var(--yellow); color: var(--ink); }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .ac-skeleton::after, .ac-caret { animation: none; }
-  .ac-root *, .ac-root *::before, .ac-root *::after { transition-duration: 1ms !important; }
-}
+  @media (prefers-reduced-motion: reduce) {
+    .ac-skeleton::after, .ac-caret { animation: none; }
+    .ac-root *, .ac-root *::before, .ac-root *::after { transition-duration: 1ms !important; }
+  }
 
-/* OrbitStatement discs: centre at (x, y), diameter s — all in % of the stage width, y in % of its height.
-   Negative margins centre the disc without a transform, which Motion owns. Phones read --m*. */
-.ac-orbit-node {
-  position: absolute;
-  aspect-ratio: 1;
-  left: var(--mx);
-  top: var(--my);
-  width: var(--ms);
-  margin: calc(var(--ms) / -2) 0 0 calc(var(--ms) / -2);
-}
-@media (min-width: 640px) {
+  /* OrbitStatement discs: centre at (x, y), diameter s — all in % of the stage width, y in % of its height.
+     Negative margins centre the disc without a transform, which Motion owns. Phones read --m*. */
   .ac-orbit-node {
-    left: var(--x);
-    top: var(--y);
-    width: var(--s);
-    margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+    position: absolute;
+    aspect-ratio: 1;
+    left: var(--mx);
+    top: var(--my);
+    width: var(--ms);
+    margin: calc(var(--ms) / -2) 0 0 calc(var(--ms) / -2);
+  }
+  @media (min-width: 640px) {
+    .ac-orbit-node {
+      left: var(--x);
+      top: var(--y);
+      width: var(--s);
+      margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+    }
   }
 }

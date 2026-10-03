@@ -81,7 +81,7 @@ export function PipelineDiagram({ steps, notes = [], ariaLabel, className }: Pip
                     : { borderColor: lit(added ? `${YELLOW}0.55)` : "rgba(255,255,255,0.28)", `${YELLOW}1)`), backgroundColor: lit("#1c1b1f", final ? "#3a3320" : "#2a2820") }}
                   transition={reduce ? undefined : { ...loop, times }}
                 >
-                  <span className={`font-display text-[1.0625rem] sm:text-lead leading-tight ${agent ? "font-medium" : ""}`}>{name}</span>
+                  <span className={`font-display text-[1.0625rem] sm:text-lead max-sm:leading-tight ${agent ? "font-medium" : ""}`}>{name}</span>
                   {notes[i] && <span className={`mt-1 font-body text-caption leading-snug ${agent ? "text-ink" : "text-muted-on-dark"}`}>{notes[i]}</span>}
                 </motion.div>
               </StaggerItem>

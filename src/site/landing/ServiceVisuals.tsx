@@ -57,7 +57,7 @@ function Stem({ className = "" }: { className?: string }) {
 
 const Title = ({ children, note }: { children: React.ReactNode; note?: React.ReactNode }) => (
   <p className="m-0 flex items-baseline justify-between gap-3">
-    <span className="font-display text-[1.0625rem] sm:text-lead leading-tight text-ink">{children}</span>
+    <span className="font-display text-[1.0625rem] sm:text-lead max-sm:leading-tight text-ink">{children}</span>
     {note && <span className="font-body text-caption text-ink-muted">{note}</span>}
   </p>
 );

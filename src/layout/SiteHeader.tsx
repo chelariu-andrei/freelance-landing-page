@@ -112,7 +112,7 @@ export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "
       <nav aria-label={label} className="hidden lg:block">
         <ul className={"flex items-center gap-10 m-0 p-0 list-none"}>
           {links.map((l) => (
-            <li key={l.href}><a href={l.href} aria-current={l.href === currentHref ? "page" : undefined} className={cx("ac-focus rounded-sm font-body text-body-lg text-ink no-underline hover:underline underline-offset-4", l.href === currentHref && "underline")}>{l.label}</a></li>
+            <li key={l.href}><a href={l.href} aria-current={l.href === currentHref ? "page" : undefined} className="ac-focus rounded-sm font-body text-body-lg text-ink no-underline hover:underline underline-offset-4">{l.label}</a></li>
           ))}
         </ul>
       </nav>
@@ -133,7 +133,7 @@ export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "
   );
 
   return (
-    <header className={cx(sticky ? "sticky top-0 z-50" : "relative z-10", notch ? "flex justify-center px-10 lg:px-32" : "bg-cream", sticky && "transition-transform duration-300 ease-out motion-reduce:transition-none", stickyHidden && "-translate-y-full", className)}>
+    <header className={cx(sticky ? "sticky top-0 z-50" : "relative z-10", notch ? "flex justify-center px-10 lg:px-32" : "bg-cream", sticky && "transition-transform duration-fast ease-out motion-reduce:transition-none", stickyHidden && "-translate-y-full", className)}>
       <div style={notch && notchTone === "white" ? ({ ["--notch-bg" as any]: "var(--white)" } as React.CSSProperties) : undefined} className={cx("w-full flex items-center justify-between gap-6", notch ? "ac-notch max-w-[1380px] pl-6 pr-3 lg:px-10 h-20 lg:h-[7rem]" : "mx-auto max-w-container px-5 md:px-10 lg:px-16 lg:h-[7rem] h-20")}>
         {logoNode}
         {desktopNav("Main")}
@@ -176,7 +176,7 @@ export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "
           <>
             <motion.div
               key="scrim"
-              className="lg:hidden fixed inset-0 z-[55] bg-ink/50"
+              className="lg:hidden fixed inset-0 z-[55]"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: reduce ? 0.01 : D.base }}
               onClick={() => setOpen(false)}
@@ -202,7 +202,7 @@ export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "
                 <ul className="flex flex-col m-0 p-0 list-none">
                   {links.map((l) => (
                     <li key={l.href}>
-                      <a href={l.href} aria-current={l.href === currentHref ? "page" : undefined} onClick={() => setOpen(false)} className={cx("ac-focus rounded-sm block py-3 font-body text-body-lg text-ink no-underline", l.href === currentHref && "underline underline-offset-4")}>{l.label}</a>
+                      <a href={l.href} aria-current={l.href === currentHref ? "page" : undefined} onClick={() => setOpen(false)} className="ac-focus rounded-sm block py-3 font-body text-body-lg text-ink no-underline">{l.label}</a>
                     </li>
                   ))}
                 </ul>

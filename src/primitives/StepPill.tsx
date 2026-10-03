@@ -31,7 +31,7 @@ export function StepPill({ label, number, icon, size = "lg", tone = "black", as 
       )}
       <span className={cx("inline-flex items-center rounded-pill", bg, lg ? "h-16 lg:h-20 pl-6 lg:pl-8 pr-2 gap-5 text-label-lg" : "h-12 pl-5 pr-1 gap-3 text-button")}>
         <span className={cx(!icon && (lg ? "pr-6" : "pr-4"))}>{label}</span>
-        {icon && <IconCircle tone="white" size={lg ? "md" : "sm"} className={lg ? "lg:w-16 lg:h-16" : "w-10 h-10"}>{icon}</IconCircle>}
+        {icon && <IconCircle tone="white" size={lg ? "md" : "sm"} className={lg ? "lg:w-16 lg:h-16" : undefined}>{icon}</IconCircle>}
       </span>
     </Comp>
   );

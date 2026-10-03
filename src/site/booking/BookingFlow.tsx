@@ -97,7 +97,7 @@ export function BookingFlow() {
   const daySlots = date && slots ? slots.get(dayKey(date)) ?? [] : [];
 
   const heading = (text: string) => (
-    <h3 ref={headingRef} tabIndex={-1} className="m-0 font-display font-regular text-heading-lg text-ink outline-none">{text}</h3>
+    <h3 ref={headingRef} tabIndex={-1} className="m-0 font-display font-regular text-heading-lg text-ink outline-hidden">{text}</h3>
   );
 
   const errorBox = (code: BookingError) => (
@@ -198,7 +198,7 @@ export function BookingFlow() {
                 onChange={set("note")}
                 rows={4}
                 maxLength={2000}
-                className="resize-y rounded-lg border border-solid border-line bg-white p-4 font-body text-body text-ink outline-none focus:border-ink"
+                className="resize-y rounded-lg border border-solid border-line bg-white p-4 font-body text-body text-ink outline-hidden focus:border-ink"
               />
             </label>
           </div>

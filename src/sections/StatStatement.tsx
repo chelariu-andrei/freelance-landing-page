@@ -79,7 +79,7 @@ export function StatStatement({ rows, stepped = true, animated = true, backgroun
             <div key={ri} className={cx("flex items-start", stepped && ri > 0 && "pl-6 sm:pl-12 lg:pl-20")}>
               <motion.p
                 variants={on ? v.pill : undefined}
-                className="m-0 flex flex-wrap items-center gap-x-2 sm:gap-x-3 lg:gap-x-6 gap-y-1 bg-white rounded-pill px-4 sm:px-10 lg:px-16 py-3 sm:py-5 lg:min-h-[9rem] font-display whitespace-nowrap text-[clamp(1rem,5vw,1.375rem)] leading-[1.25] sm:text-heading-lg lg:text-[clamp(2.75rem,1.2rem+3vw,4.5rem)] lg:leading-[1.1] tracking-[-0.02em] text-ink"
+                className="m-0 flex flex-wrap items-center gap-x-2 sm:gap-x-3 lg:gap-x-6 gap-y-1 bg-white rounded-pill px-4 sm:px-10 lg:px-16 py-3 sm:py-5 lg:min-h-[9rem] font-display whitespace-nowrap text-[clamp(1rem,5vw,1.375rem)] max-sm:leading-[1.25] sm:text-heading-lg lg:text-[clamp(2.75rem,1.2rem+3vw,4.5rem)] lg:leading-[1.1] tracking-[-0.02em] text-ink"
               >
                 {row.parts.map((p, pi) => {
                   const common = { custom: pi, variants: on ? (p.kind === "text" ? v.word : v.bubble) : undefined };
