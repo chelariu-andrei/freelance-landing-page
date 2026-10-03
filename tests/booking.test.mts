@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { dayKey, demoSlots, groupByDay, isEmail, isPhone } from "../src/site/booking/slots.ts";
+import { UI } from "react-day-picker";
 
 test("slots are grouped by local day, in time order", () => {
   const a = new Date(2026, 9, 14, 15, 0).toISOString();
@@ -37,4 +38,11 @@ test("demo slots skip weekends and stay inside 10:00-17:00", () => {
     assert.ok(d.getDay() !== 0 && d.getDay() !== 6, s);
     assert.ok(d.getHours() >= 10 && d.getHours() < 17, s);
   }
+});
+
+test("every calendar classNames key still exists in react-day-picker", () => {
+  const used = ["months", "month", "month_caption", "caption_label", "nav", "button_previous", "button_next",
+    "month_grid", "weekday", "day", "day_button", "today", "selected", "outside", "disabled", "hidden"];
+  const known = new Set<string>([...Object.values(UI), "today", "selected", "outside", "disabled", "hidden"]);
+  for (const k of used) assert.ok(known.has(k), `unknown DayPicker classNames key: ${k}`);
 });

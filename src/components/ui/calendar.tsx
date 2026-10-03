@@ -10,11 +10,11 @@ const reset = "appearance-none border-0 bg-transparent p-0 m-0 font-body";
 const navButton = cn(
   reset,
   "ac-focus inline-flex h-10 w-10 items-center justify-center rounded-full text-ink cursor-pointer transition-colors duration-fast hover:bg-cream",
-  "disabled:opacity-30 disabled:cursor-default disabled:hover:bg-transparent",
+  "disabled:opacity-30 disabled:cursor-default disabled:hover:bg-transparent aria-disabled:opacity-30 aria-disabled:cursor-default aria-disabled:hover:bg-transparent",
 );
 
 /**
- * shadcn-style Calendar on react-day-picker v9. Styled with the Ac. tokens instead of shadcn's CSS variables,
+ * shadcn-style Calendar on react-day-picker v10. Styled with the Ac. tokens instead of shadcn's CSS variables,
  * and resets native button styles itself because Tailwind preflight is off in this project.
  */
 export function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
