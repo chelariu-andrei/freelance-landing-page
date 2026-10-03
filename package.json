@@ -1,7 +1,7 @@
 {
   "name": "ac-design-system",
   "version": "0.1.0",
-  "description": "Ac. design system — React + TypeScript + Tailwind + Framer Motion",
+  "description": "Ac. design system — React + TypeScript + Tailwind + Motion",
   "engines": { "node": "24.x" },
   "main": "src/index.ts",
   "scripts": {

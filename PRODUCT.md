@@ -20,7 +20,7 @@ Three fixed-scope services sharing one path (discover, build, test and launch): 
 
 ## Capabilities and Constraints
 - Pages: Home (hero, services, stats, contact), About, Privacy (GDPR: booking data, analytics, hosting, rights), and a 404 page for unknown addresses.
-- Static-first Next.js 14 + Tailwind + framer-motion; no cookies. Cookieless Vercel Web Analytics (aggregate page views), disclosed on /privacy.
+- Static-first Next.js 16 + Tailwind 4 + Motion; no cookies. Cookieless Vercel Web Analytics (aggregate page views), disclosed on /privacy.
 - Pricing hidden by default (`pricingMode`), `from` mode available; price values are placeholders.
 - Open placeholders: `SITE_URL`, `CAL_LINK`, service prices.
 - Site language is English; the owner converses in Romanian.
