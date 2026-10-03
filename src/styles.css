@@ -1,11 +1,15 @@
-/* Tailwind 4 without preflight (we never used it): theme variables + utilities only, tokens from the JS config. */
+/* Tailwind 4 without preflight (we never used it): theme variables + utilities only, tokens from the JS config.
+   source(none) turns off v4's project-wide scan (docs/, .superpowers/, READMEs...); only the config's `content` globs are scanned, as in v3. */
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
 @config "../tailwind.config.js";
 
 /* v4 ships a built-in `max-w-prose` (65ch) that wins over the config's `maxWidth.prose`, even via @utility.
-   Restate the token here, after the generated utilities, so `max-w-prose` stays 44rem. */
+   Restate the token here, after the generated utilities, so the bare `max-w-prose` stays 44rem.
+   Limits: this only covers the bare class. Variants (`lg:max-w-prose`, `hover:max-w-prose`) still compile to
+   v4's 65ch. And because this rule comes after every utility, it beats a responsive override on the same element:
+   `max-w-prose lg:max-w-none` keeps 44rem at lg. Use an arbitrary value (`max-w-[44rem]`) where you need either. */
 @layer utilities {
   .max-w-prose { max-width: 44rem; }
 }
