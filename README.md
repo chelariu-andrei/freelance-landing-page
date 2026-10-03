@@ -7,6 +7,7 @@ React 19 + TypeScript 7 + Tailwind 4 + Motion 14 (Next 16). Requires Node 24. Ev
    - Tailwind 4 is required. Pasting `src/styles.css` into a Tailwind 3 entry breaks on its `@import` and `@config` lines.
    - The bundle CSS (`dist/bundle.css`) is wrapped in cascade layers (`@layer theme, base, components, utilities`) and uses `@property`. A host page's unlayered CSS beats Ac. utilities, so import it into your own layer order.
    - It needs Tailwind 4's browser floor: Safari 16.4+, Chrome 111+, Firefox 128+.
+   - `dist/bundle.js` takes React from `window.React`, so the host page must supply React 19: the Button and Input `ref` props depend on it.
 2. Extend your Tailwind config with `tailwind.config.js`, or use it as-is. Add your app's files to `content`.
 3. Load the fonts: `@fontsource-variable/urbanist` and `@fontsource-variable/inter`.
 4. Wrap the app in `<div className="ac-root">` and import components from `src/index.ts`.
