@@ -177,3 +177,7 @@ test("footer social icons render (lucide v1 dropped brand icons)", () => {
   assert.match(html, /lucide-linkedin/);
   assert.match(html, /lucide-github/);
 });
+
+test("route changes jump to top instead of smooth-scrolling (Next 16 data-scroll-behavior)", () => {
+  for (const p of PAGES) assert.match(page(p), /<html[^>]*data-scroll-behavior="smooth"/, p);
+});

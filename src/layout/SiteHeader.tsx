@@ -93,7 +93,6 @@ export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "
   const floatingShown = floating && stuck && up;
   const stickyHidden = hideOnScroll && sticky && stuck && !up && !open;
   const slide = { duration: reduce ? 0.01 : D.base, ease: E.out };
-  const inertProps = floatingShown ? {} : ({ inert: "" } as Record<string, string>);
 
   const menuButton = (
     <button
@@ -149,7 +148,7 @@ export function SiteHeader({ links, ctas = [], logo, logoHref = "/", variant = "
           animate={{ y: floatingShown ? 0 : "-130%", opacity: floatingShown ? 1 : 0 }}
           transition={slide}
           aria-hidden={floatingShown ? undefined : true}
-          {...inertProps}
+          inert={!floatingShown}
         >
           {/* Mobile: floating pill */}
           <div className="lg:hidden flex items-center justify-between gap-6 h-16 pl-5 pr-2 rounded-lg bg-cream shadow-[0_8px_24px_-8px_rgba(20,20,26,0.35)]">

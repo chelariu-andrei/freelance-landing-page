@@ -12,9 +12,9 @@ import type { ServiceVisual } from "@/content/content";
  * Monospace is used only for what is literally code or data: JSON, HTTP, SQL, routes.
  */
 
-function usePlayhead(ref: React.RefObject<Element>, end: number, stepMs: (k: number) => number, holdMs: number) {
+function usePlayhead(ref: React.RefObject<HTMLDivElement | null>, end: number, stepMs: (k: number) => number, holdMs: number) {
   const reduce = useReducedMotion();
-  const inView = useInView(ref, { amount: 0.45 });
+  const inView = useInView(ref as React.RefObject<Element>, { amount: 0.45 }) /* framer-motion 11 typings predate React 19 nullable refs */;
   const [tick, setTick] = React.useState(end);
   const [cycle, setCycle] = React.useState(0);
   React.useEffect(() => {

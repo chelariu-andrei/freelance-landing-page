@@ -16,7 +16,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400"], variable: "--
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={mono.variable}>
+    <html lang="en" className={mono.variable} data-scroll-behavior="smooth">
       <head>
         <noscript>
           <style>{`.ac-root [style*="opacity:0"],.ac-root [style*="opacity: 0"]{opacity:1!important;transform:none!important;clip-path:none!important;filter:none!important}`}</style>
