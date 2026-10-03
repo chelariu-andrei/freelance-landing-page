@@ -10,6 +10,7 @@
     "prebuild:site": "node scripts/check-placeholders.mjs",
     "build:site": "next build",
     "test": "node --test \"tests/*.test.*\"",
+    "test:visual": "playwright test",
     "typecheck": "tsc -p .",
     "build:bundle": "node build.mjs",
     "build:css": "tailwindcss -c tailwind.config.js -i src/styles.css -o dist/bundle.css --minify",
@@ -19,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/node": "26.6.3",
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
@@ -26,6 +28,7 @@
     "autoprefixer": "^10.6.1",
     "esbuild": "^0.23.1",
     "postcss": "^8.5.28",
+    "serve": "^14.2.6",
     "tailwindcss": "3.4",
     "typescript": "^5.9.3"
   },

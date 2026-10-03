@@ -170,3 +170,9 @@ test("landing hero leads with the Java + AI niche", () => {
   assert.match(html, /you already run\./);
   assert.doesNotMatch(html, /restaurant-ai/);
 });
+
+test("footer social icons render (lucide v1 dropped brand icons)", () => {
+  const html = page("index");
+  assert.match(html, /lucide-linkedin/);
+  assert.match(html, /lucide-github/);
+});
