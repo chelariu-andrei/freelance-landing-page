@@ -14,9 +14,9 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
 }
 
 /** Pill text field. Not shown on the reference site — derived from the button geometry (see README). */
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input(
-  { label, hideLabel, hint, error, tone = "light", size = "md", iconLeft, id, className, disabled, ...rest }, ref,
-) {
+export function Input({
+  label, hideLabel, hint, error, tone = "light", size = "md", iconLeft, id, className, disabled, ref, ...rest
+}: InputProps & { ref?: React.Ref<HTMLInputElement> }) {
   const auto = React.useId();
   const fid = id ?? auto;
   const dark = tone === "dark";
@@ -55,4 +55,4 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
       ) : null}
     </div>
   );
-});
+}

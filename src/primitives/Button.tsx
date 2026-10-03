@@ -44,10 +44,9 @@ export const buttonClasses = (variant: ButtonVariant = "primary", size: ButtonSi
   );
 
 /** Pill button. Every CTA in the system is a pill; yellow is reserved for the single most important action in view. */
-export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(function Button(
-  { variant = "primary", size = "md", href, iconLeft, iconRight, fullWidth, animated = true, className, children, disabled, ...rest },
-  ref,
-) {
+export function Button({
+  variant = "primary", size = "md", href, iconLeft, iconRight, fullWidth, animated = true, className, children, disabled, ref, ...rest
+}: ButtonProps & { ref?: React.Ref<HTMLButtonElement | HTMLAnchorElement> }) {
   const press = usePressMotion("button", animated && !disabled);
   const cls = buttonClasses(variant, size, fullWidth, className);
   const inner = (<>{iconLeft}{children != null && <span>{children}</span>}{iconRight}</>);
@@ -63,4 +62,4 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
       {inner}
     </motion.button>
   );
-});
+}
