@@ -83,7 +83,7 @@ export const content = {
     medium: social.medium,
     /** Europass CV, served from /public. */
     europass: "/EUROPASS_CV.pdf",
-    photo: "/me.png",
+    photo: "/me.webp",
     years: YEARS,
     industries: INDUSTRIES,
     areaServed: "Worldwide",

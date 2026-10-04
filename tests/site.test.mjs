@@ -110,9 +110,9 @@ test("closing section is in the static HTML (works without JS/WebGL)", () => {
   assert.match(slice, />(?:<span[^>]*>)?Book a call</);
 });
 
-test("about renders the real photo (/me.png), never a broken {{PHOTO}} img", () => {
+test("about renders the real photo (/me.webp), never a broken {{PHOTO}} img", () => {
   const html = page("about");
-  assert.match(html, /<img src="\/me\.png" alt="Andrei Chelariu"/);
+  assert.match(html, /<img src="\/me.webp" alt="Andrei Chelariu"/);
   assert.doesNotMatch(html, /src="\{\{PHOTO\}\}"/);
 });
 

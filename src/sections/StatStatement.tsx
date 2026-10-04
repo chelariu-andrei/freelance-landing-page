@@ -42,8 +42,8 @@ function rowVariants(reduce: boolean, ri: number) {
     show: { opacity: 1, clipPath: `inset(0% 0% 0% 0% round ${PILL_R})`, transition: { duration: D.hero, delay: at, ease: E.out } },
   };
   const word: Variants = {
-    hidden: { opacity: 0, y: "0.5em", filter: "blur(6px)" },
-    show: (i: number) => ({ opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: D.slow, delay: at + 0.25 + i * S.base, ease: E.out } }),
+    hidden: { opacity: 0, y: "0.5em" },
+    show: (i: number) => ({ opacity: 1, y: 0, transition: { duration: D.slow, delay: at + 0.25 + i * S.base, ease: E.out } }),
   };
   const bubble: Variants = {
     hidden: { opacity: 0, scale: 0.4, rotate: -20 },
