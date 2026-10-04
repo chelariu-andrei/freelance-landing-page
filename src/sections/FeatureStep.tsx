@@ -30,7 +30,7 @@ export function FeatureStep({ number, label, icon, body, media, tone = "cream", 
   const Wrap = ({ children, d = 0, v = "up" as const }: { children: React.ReactNode; d?: number; v?: "up" | "left" | "right" }) =>
     animated ? <Reveal delay={d} variant={v}>{children}</Reveal> : <>{children}</>;
   return (
-    <section id={id} className={cx("bg-cream scroll-mt-4", yellow ? "px-2 lg:px-gutter py-2" : "py-10 lg:py-24", className)}>
+    <section id={id} className={cx("bg-cream scroll-mt-4 overflow-x-clip",yellow ? "px-2 lg:px-gutter py-2" : "py-10 lg:py-24", className)}>
       <div className={cx(yellow && "bg-yellow rounded-xl lg:rounded-2xl py-10 lg:py-20")}>
         <div className="mx-auto max-w-wide px-5 md:px-10 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           <div className={cx("lg:col-span-5 flex flex-col gap-6 lg:gap-8", side === "left" ? "lg:order-2 lg:col-start-8" : "lg:order-1")}>
