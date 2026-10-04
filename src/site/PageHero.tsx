@@ -3,7 +3,7 @@ import * as React from "react";
 import { HeroSection, type HeroLine } from "@/sections/HeroSection";
 import { SiteHeader } from "@/layout/SiteHeader";
 import { content } from "@/content/content";
-import { resolveHref } from "@/content/links";
+import { CONTACT_FALLBACK } from "@/content/links";
 
 export interface PageHeroProps {
   current: string;
@@ -25,7 +25,7 @@ export function PageHero({ current, ...hero }: PageHeroProps) {
           variant="notch"
           sticky={false}
           links={content.nav.links}
-          ctas={[{ label: content.nav.cta, href: resolveHref(content.site.calLink), variant: "primary" }]}
+          ctas={[{ label: content.nav.cta, href: CONTACT_FALLBACK, variant: "primary" }]}
           currentHref={current}
           pinCtaOnMobile
         />

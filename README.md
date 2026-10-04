@@ -54,4 +54,4 @@ Props interfaces live next to each component. The design-system artifact carries
 **Env:** `NEXT_PUBLIC_SITE_URL` (absolute URL, used for canonical, sitemap and JSON-LD; defaults to `content.site.url`).
 
 **Placeholders to fill** in `src/content/content.ts` (unset links fall back to `/#contact` or are hidden):
-`{{CAL_LINK}}` · `{{EMAIL}}` · `{{LINKEDIN}}` · `{{GITHUB}}` · `{{PHOTO}}` (image path under `public/`) · `{{YEARS}}` · `{{INDUSTRIES}}` · `{{SITE_URL}}` (`site.url`) · `{{PRICE_*}}` (shown only when `site.pricingMode = "from"`).
+`{{EMAIL}}` · `{{LINKEDIN}}` · `{{GITHUB}}` · `{{PHOTO}}` (image path under `public/`) · `{{YEARS}}` · `{{INDUSTRIES}}` · `{{SITE_URL}}` (`site.url`) · `{{PRICE_*}}` (shown only when `site.pricingMode = "from"`).

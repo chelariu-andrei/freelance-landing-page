@@ -5,14 +5,14 @@ import { Button } from "@/primitives/Button";
 import { ArrowDown } from "lucide-react";
 import { HeroTerminal } from "@/site/HeroTerminal";
 import { content } from "@/content/content";
-import { resolveHref } from "@/content/links";
+import { CONTACT_FALLBACK } from "@/content/links";
 
 export function LandingHero() {
   const h = content.landing.hero;
   // One yellow action; the secondary is a quiet text link so the eye lands on booking first.
   const action = (
     <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8">
-      <ArrowCta size="lg" tone="yellow" label={h.primaryCta} hoverLabel={h.primaryCtaHover} href={resolveHref(content.site.calLink)} />
+      <ArrowCta size="lg" tone="yellow" label={h.primaryCta} hoverLabel={h.primaryCtaHover} href={CONTACT_FALLBACK} />
       <Button href={h.secondaryCta.href} variant="ghost" iconRight={<ArrowDown size={18} strokeWidth={1.75} aria-hidden />} className="text-white py-3">{h.secondaryCta.label}</Button>
     </div>
   );

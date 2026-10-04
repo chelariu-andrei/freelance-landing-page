@@ -3,7 +3,7 @@ import { Mail, FileUser } from "lucide-react";
 import { Linkedin, Github } from "@/icons/brand";
 import { SiteFooter } from "@/layout/SiteFooter";
 import { content } from "@/content/content";
-import { isSet, mailtoHref, resolveHref } from "@/content/links";
+import { CONTACT_FALLBACK, isSet, mailtoHref } from "@/content/links";
 
 export interface FooterProps {
   year: number;
@@ -21,7 +21,7 @@ export function Footer({ year }: FooterProps) {
   return (
     <SiteFooter
       tagline={footer.tagline}
-      ctas={[{ label: nav.cta, href: resolveHref(site.calLink) }]}
+      ctas={[{ label: nav.cta, href: CONTACT_FALLBACK }]}
       columns={[{ title: footer.pagesTitle, links: [...nav.links, footer.privacyLink] }]}
       socials={socials}
       socialsTitle={footer.connectTitle}

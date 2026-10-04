@@ -5,11 +5,11 @@ import { visualFor } from "@/site/landing/ServiceVisuals";
 import { ArrowCta } from "@/primitives/ArrowCta";
 import { iconFor } from "@/site/icons";
 import { content } from "@/content/content";
-import { resolveHref } from "@/content/links";
+import { CONTACT_FALLBACK } from "@/content/links";
 
 export function Services() {
   const { services, servicesCta, servicesAriaLabel, serviceLabels } = content.landing;
-  const cal = resolveHref(content.site.calLink);
+  const cal = CONTACT_FALLBACK;
   return (
     <section id="service-details" aria-label={servicesAriaLabel}>
       {services.map((s, i) => (

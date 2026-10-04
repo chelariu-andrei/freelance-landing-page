@@ -3,11 +3,11 @@ import dynamic from "next/dynamic";
 import { Button } from "@/primitives/Button";
 import { HighlightText } from "@/primitives/HighlightText";
 import { content } from "@/content/content";
-import { isSet, resolveHref } from "@/content/links";
+import { CONTACT_FALLBACK, isSet } from "@/content/links";
 
 function useClosingProps() {
   const c = content.about.closing;
-  const primaryCta = { label: c.primaryCta, href: resolveHref(content.site.calLink) };
+  const primaryCta = { label: c.primaryCta, href: CONTACT_FALLBACK };
   const secondaryCta = isSet(content.site.linkedin) ? { label: c.secondaryCta, href: content.site.linkedin } : undefined;
   return { c, primaryCta, secondaryCta };
 }

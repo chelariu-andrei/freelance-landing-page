@@ -70,8 +70,7 @@ export const content = {
     name: "Andrei Chelariu",
     role: "Freelance Software Engineer: AI Automation, Custom Software, Legacy Modernization",
     /** {{SITE_URL}}: replace, or set NEXT_PUBLIC_SITE_URL. Must be a valid absolute URL. */
-    url: "https://example.com",
-    calLink: "{{CAL_LINK}}",
+    url: "https://andreichelariu.vercel.app",
     /** {{BOOKING_URL}}: the Google Apps Script web app URL (integrations/google-calendar/README.md), or set NEXT_PUBLIC_BOOKING_URL. */
     bookingUrl: "{{BOOKING_URL}}",
     email: "chelariu.andrew@gmail.com",

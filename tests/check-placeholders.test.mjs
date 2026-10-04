@@ -15,8 +15,8 @@ test("exits 0 with no deploy-host env set", () => {
   assert.equal(result.status, 0);
 });
 
-test("exits 1 when VERCEL is set and no NEXT_PUBLIC_SITE_URL (site.url is example.com)", () => {
-  const result = run({ ...baseEnv, VERCEL: "1" });
+test("exits 1 when VERCEL is set and the site URL is example.com", () => {
+  const result = run({ ...baseEnv, VERCEL: "1", NEXT_PUBLIC_SITE_URL: "https://example.com" });
   assert.equal(result.status, 1);
   assert.match(result.stdout + result.stderr, /NEXT_PUBLIC_SITE_URL/);
 });
@@ -26,7 +26,7 @@ test("exits 0 when VERCEL is set but NEXT_PUBLIC_SITE_URL overrides example.com"
   assert.equal(result.status, 0);
 });
 
-test("lists unfilled placeholder tokens, including CAL_LINK", () => {
+test("lists unfilled placeholder tokens, including BOOKING_URL", () => {
   const result = run({ ...baseEnv });
-  assert.match(result.stdout + result.stderr, /CAL_LINK/);
+  assert.match(result.stdout + result.stderr, /BOOKING_URL/);
 });

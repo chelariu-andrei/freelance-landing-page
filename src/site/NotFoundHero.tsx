@@ -5,7 +5,7 @@ import { HeroTerminal } from "@/site/HeroTerminal";
 import { ArrowCta } from "@/primitives/ArrowCta";
 import { Button } from "@/primitives/Button";
 import { content } from "@/content/content";
-import { CONTACT_FALLBACK, resolveHref } from "@/content/links";
+import { CONTACT_FALLBACK } from "@/content/links";
 
 /** Long paths would push the terminal line out of its frame; keep the start, which is what people recognise. */
 const MAX_PATH = 28;
@@ -22,7 +22,7 @@ export function NotFoundHero() {
   const action = (
     <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8">
       <ArrowCta size="lg" tone="yellow" label={n.primaryCta} hoverLabel={n.primaryCtaHover} href="/" />
-      <Button href={resolveHref(content.site.calLink, CONTACT_FALLBACK)} variant="ghost" className="text-white py-3">{n.secondaryCta}</Button>
+      <Button href={CONTACT_FALLBACK} variant="ghost" className="text-white py-3">{n.secondaryCta}</Button>
     </div>
   );
   return (
