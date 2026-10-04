@@ -69,7 +69,7 @@ export function SiteFooter({ tagline, ctas = [], columns, socials = [], socialsT
           )}
         </div>
         <div className="flex flex-col gap-8">
-          {logo ?? <Logo tone="white" size="xl" />}
+          {logo ?? <Logo tone="white" size="xl" href="/" />}
           <div className="flex flex-wrap gap-x-10 gap-y-2 font-body text-sm text-subtle-on-dark">
             <span>{copyright}</span>
             {legal.map((l) => <a key={l.href} href={l.href} className="ac-focus rounded-sm text-subtle-on-dark no-underline hover:text-white">{l.label}</a>)}

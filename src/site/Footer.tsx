@@ -1,6 +1,6 @@
 "use client";
 import { Mail, FileUser } from "lucide-react";
-import { Linkedin, Github } from "@/icons/brand";
+import { Linkedin, Github, Medium } from "@/icons/brand";
 import { SiteFooter } from "@/layout/SiteFooter";
 import { content } from "@/content/content";
 import { CONTACT_FALLBACK, isSet, mailtoHref } from "@/content/links";
@@ -15,6 +15,7 @@ export function Footer({ year }: FooterProps) {
   const socials = [
     ...(isSet(site.linkedin) ? [{ label: footer.linkedinLabel, href: site.linkedin, icon: icon(Linkedin) }] : []),
     ...(isSet(site.github) ? [{ label: footer.githubLabel, href: site.github, icon: icon(Github) }] : []),
+    ...(isSet(site.medium) ? [{ label: footer.mediumLabel, href: site.medium, icon: icon(Medium) }] : []),
     ...(isSet(site.email) ? [{ label: footer.emailLabel, href: mailtoHref(site.email), icon: icon(Mail) }] : []),
     ...(isSet(site.europass) ? [{ label: footer.europassLabel, href: site.europass, icon: icon(FileUser) }] : []),
   ];

@@ -5,8 +5,12 @@ export type IconKey =
   | "audit" | "implement" | "platform" | "legacy" | "agents" | "code" | "process" | "steps" | "shipped" | "mentor" | "stack" | "years";
 
 export interface NavLink { label: string; href: string }
-/** One step of the Discover → Build → Test & launch path shared by all services. */
-export interface ProcessStep { name: string; text: string }
+/** One step of the Discovery → Plan → Build & Test → Performance & resilience tests → Canary deployment path shared by all services. */
+export interface ProcessStep {
+  name: string; text: string;
+  /** Yellow callout under the step's text: what the client takes away at this point. */
+  handover?: { label: string; text: string };
+}
 /** 01: one inbound document run through the agent, its guardrails, and out to an API or a person. */
 export interface AgentCase {
   file: string; from: string;
@@ -63,7 +67,7 @@ export interface PrivacySection { title: string; paragraphs: string[]; email?: b
 const YEARS = "5+";
 const INDUSTRIES = "Retail";
 
-const social = { linkedin: "https://www.linkedin.com/in/andrei-chelariu-8a7a86204/", github: "https://github.com/chelariu-andrei" };
+const social = { linkedin: "https://www.linkedin.com/in/andrei-chelariu-8a7a86204/", github: "https://github.com/chelariu-andrei", medium: "https://medium.com/@chelariu.webusiness" };
 
 export const content = {
   site: {
@@ -76,6 +80,7 @@ export const content = {
     email: "chelariu.andrew@gmail.com",
     linkedin: social.linkedin,
     github: social.github,
+    medium: social.medium,
     /** Europass CV, served from /public. */
     europass: "/EUROPASS_CV.pdf",
     photo: "/me.png",
@@ -87,8 +92,8 @@ export const content = {
   },
   nav: {
     links: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
+      { label: "Services", href: "/" },
+      { label: "About me", href: "/about" },
     ] as NavLink[],
     cta: "Book a call",
   },
@@ -98,6 +103,7 @@ export const content = {
     connectTitle: "Connect",
     linkedinLabel: "LinkedIn",
     githubLabel: "GitHub",
+    mediumLabel: "Medium",
     emailLabel: "Email",
     europassLabel: "Europass CV",
     privacy: "No cookies. Privacy-friendly analytics.",
@@ -167,9 +173,15 @@ export const content = {
       process: {
         title: "How it runs",
         steps: [
-          { name: "Discover", text: "Map your workflows, systems and data, then agree a prioritized scope." },
-          { name: "Build", text: "Implement against your APIs and data, with guardrails and tests at every step." },
-          { name: "Test & launch", text: "Test on real cases, ship to production and hand over with docs." },
+          { name: "Discovery", text: "Map your workflows, systems and data. Agree the goal and what “done” means." },
+          { name: "Plan", text: "Write down scope, architecture, milestones and risks, so you know what ships and when." },
+          { name: "Build & Test", text: "Build in small steps against your real APIs and data, with guardrails and automated tests at each one." },
+          { name: "Performance & resilience tests", text: "Check it under load, with bad input and with a dependency down, before real users see it." },
+          {
+            name: "Canary deployment",
+            text: "Release to a small share of traffic, watch the metrics, then widen. Rollback is one switch.",
+            handover: { label: "Handover & ongoing support", text: "Docs and a runbook on delivery." },
+          },
         ] as ProcessStep[],
       },
       pick: "Take one service, or combine several:",

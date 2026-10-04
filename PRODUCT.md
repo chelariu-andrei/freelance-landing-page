@@ -16,7 +16,7 @@ Personal site of Andrei Chelariu, a freelance senior backend engineer (AI-powere
 Adds AI agents and automation to existing Java/Spring systems without a rewrite and without breaking production: one engineer with enterprise Java depth (5+ years, retail), working in small, fixed-scope steps with guardrails, tests and handover.
 
 ## Operating Context
-Three fixed-scope services sharing one path (discover, build, test and launch): AI Automation, Custom Software, Legacy Modernization. Booking happens in a site-wide step-by-step popup (day, time, name and email, phone, topic, review), backed by a Google Apps Script that reads and writes Google Calendar (`integrations/google-calendar/`, `bookingUrl`); every "Book a call" link (`/#book`) opens it in place, on any page; contact also by email, LinkedIn, GitHub and a Europass CV served from /public.
+Three fixed-scope services sharing one path (discovery, plan, build and test, performance and resilience tests, canary deployment with handover): AI Automation, Custom Software, Legacy Modernization. Booking happens in a site-wide step-by-step popup (day, time, name and email, phone, topic, review), backed by a Google Apps Script that reads and writes Google Calendar (`integrations/google-calendar/`, `bookingUrl`); every "Book a call" link (`/#book`) opens it in place, on any page; contact also by email, LinkedIn, GitHub and a Europass CV served from /public.
 
 ## Capabilities and Constraints
 - Pages: Home (hero, services, stats, contact), About, Privacy (GDPR: booking data, analytics, hosting, rights), and a 404 page for unknown addresses.

@@ -2,6 +2,7 @@
 import { ArrowDown, Sun } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { StepPill } from "@/primitives/StepPill";
+import { ProcessTimeline } from "@/site/landing/ProcessTimeline";
 import { Reveal, Stagger, StaggerItem } from "@/motion/Reveal";
 import { iconFor } from "@/site/icons";
 import { content } from "@/content/content";
@@ -70,33 +71,7 @@ export function ServicesOverview() {
         <Reveal>
           <div className="ac-dark rounded-lg lg:rounded-xl bg-ink text-white px-6 py-10 md:px-10 lg:px-14 lg:py-14">
             <h3 className="m-0 font-display font-regular text-heading-lg text-white">{o.process.title}</h3>
-            <ol className="m-0 mt-10 lg:mt-12 p-0 list-none flex flex-col gap-8 lg:grid lg:grid-cols-3 lg:gap-0">
-              {o.process.steps.map((ph, n) => {
-                const last = n === o.process.steps.length - 1;
-                const grow = (axis: "x" | "y") => reduce ? {} : {
-                  initial: { opacity: 0, [axis === "x" ? "scaleX" : "scaleY"]: 0 },
-                  whileInView: { opacity: 0.6, [axis === "x" ? "scaleX" : "scaleY"]: 1 },
-                  viewport: { once: true, amount: 0.8 },
-                  transition: { duration: 0.6, delay: 0.25 + n * 0.35, ease: E.out },
-                };
-                return (
-                  <li key={ph.name} className="relative pl-10 lg:pl-0 lg:pr-10">
-                    <span
-                      aria-hidden
-                      className={`absolute left-0 top-[6px] lg:static lg:block h-[15px] w-[15px] rounded-full border-[1.5px] border-solid ${last ? "border-yellow bg-yellow" : "border-white bg-ink"}`}
-                    />
-                    {!last && (
-                      <>
-                        <motion.span aria-hidden className="lg:hidden absolute left-[7px] top-[27px] -bottom-[26px] w-[1.5px] origin-top bg-yellow opacity-60" {...grow("y")} />
-                        <motion.span aria-hidden className="hidden lg:block absolute left-[23px] right-[8px] top-[7px] h-[1.5px] origin-left bg-yellow opacity-60" {...grow("x")} />
-                      </>
-                    )}
-                    <h4 className="m-0 lg:mt-6 font-display font-regular text-lead text-white">{ph.name}</h4>
-                    <p className="m-0 mt-2 max-w-[22rem] font-body text-body-md text-muted-on-dark">{ph.text}</p>
-                  </li>
-                );
-              })}
-            </ol>
+            <ProcessTimeline steps={o.process.steps} />
           </div>
         </Reveal>
       </div>

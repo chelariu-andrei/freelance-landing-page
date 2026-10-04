@@ -18,3 +18,10 @@ export const Instagram = createLucideIcon("Instagram", [
   ["path", { d: "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z", key: "9exkf1" }],
   ["line", { x1: "17.5", x2: "17.51", y1: "6.5", y2: "6.5", key: "r4j83e" }],
 ]);
+
+// Medium has no lucide glyph; this is a stroke redraw of its mark (large circle, tall ellipse, thin bar) so it matches the set.
+export const Medium = createLucideIcon("Medium", [
+  ["circle", { cx: "7.5", cy: "12", r: "5.5", key: "m1" }],
+  ["ellipse", { cx: "17", cy: "12", rx: "2.5", ry: "5", key: "m2" }],
+  ["line", { x1: "22", x2: "22", y1: "7.5", y2: "16.5", key: "m3" }],
+]);

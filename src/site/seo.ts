@@ -18,11 +18,11 @@ export function pageMetadata(key: "landing" | "about" | "privacy" | "notFound", 
 }
 
 export function jsonLd(): string {
-  const { name, role, linkedin, github, areaServed } = content.site;
+  const { name, role, linkedin, github, medium, areaServed } = content.site;
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Person", "@id": `${SITE_URL}/#person`, name, jobTitle: role, url: SITE_URL, sameAs: [linkedin, github].filter(isSet) },
+      { "@type": "Person", "@id": `${SITE_URL}/#person`, name, jobTitle: role, url: SITE_URL, sameAs: [linkedin, github, medium].filter(isSet) },
       { "@type": "ProfessionalService", "@id": `${SITE_URL}/#service`, name: `${name}, ${role}`, url: SITE_URL, description: content.seo.landing.description, provider: { "@id": `${SITE_URL}/#person` }, areaServed },
     ],
   };
